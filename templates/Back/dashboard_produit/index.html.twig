@@ -1,0 +1,108 @@
+{% extends 'Back/base.html.twig' %}
+        {% block Dashboard %} class="sm_menu_btm" {% endblock %}
+        {% block Confidentialite%} class="sm_menu_btm" {% endblock %}
+        {% block Profile%} class="sm_menu_btm" {% endblock %}
+        {% block Users%} class="sm_menu_btm" {% endblock %}
+        {% block Produits%} class="active open" {% endblock %}
+        {% block Commandes%} class="sm_menu_btm" {% endblock %}
+        {% block Events%} class="sm_menu_btm" {% endblock %}
+        {% block Reclamation%} class="sm_menu_btm" {% endblock %}    
+        {% block Achats%} class="sm_menu_btm" {% endblock %}
+
+{% block body %}
+<section class="content home">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Dashboard</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="{{asset('dashboardproduit')}}"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item active">Produits</li>
+                    </ul>
+                </div>            
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="input-group m-b-0">                
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-addon">
+                            <i class="zmdi zmdi-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+ <!-- ***************************************************************************************************************-->                
+ <br>
+    <div class="row clearfix">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-7">
+                                <h5 class="m-t-0">Nombre des produits</h5>
+                            </div>
+                            <div class="col-5 text-right">
+                                <h2 class="m-b-0">  {% if num_products > 0 %} ({{ num_products }}){% endif %}</h2>
+                                
+                            </div>
+                            <div class="col-12">
+                                <div class="progress m-t-20" value="50" type="success">
+                                <div class="progress-bar l-green" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+<!-- ***************************************************************************************************************-->
+     <!-- Hover Rows -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Liste des produits</h2>
+                        
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#id</th>
+                                    <th>Nom de Produit</th>
+                                    <th>Categorie de Produit</th>
+                                    <th>Prix de Produit</th>
+				
+                                    <th>description</th>
+                                    <th>Date de Creation</th>
+                                    <th>Code à Barre</th>
+                                    
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for p in dashboard_produit %}
+                                <tr>
+                                    <th scope="row">{{p.idProduit}}</th>
+                                    <td>{{p.nomProduit}}</td>
+                                    <td>{{p.categorieProduit}}</td>
+                                    <td>{{p.prixProduit}}</td>
+
+                                    <td>{{p.description}}</td>
+                                    <td>{{p.dateCreation|date('d/m/Y')}}</td>
+                                    <td>{{p.barecode}}</td>
+                                   
+                                    <td><a href="{{path('DeleteProduit',{'id':p.idProduit} )}}"><i class="zmdi zmdi-delete"></i></a></td>
+                                </tr>
+                            {% endfor %} 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+     <!-- #END# Hover Rows --> 
+     
+    </div>
+</section>
+{% endblock %}

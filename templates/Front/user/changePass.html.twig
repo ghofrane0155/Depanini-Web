@@ -1,0 +1,45 @@
+{% extends "Front/user/profil.html.twig" %}
+{% block body %}
+<div class="block-header">
+    <div class="row clearfix">
+        <div class="col-lg-5 col-md-5 col-sm-12">
+            <h2>Change Password</h2>
+            <ul class="breadcrumb padding-0">
+                <li class="breadcrumb-item"><a href="{{ path('app_index') }}"><i class="zmdi zmdi-home"></i></a></li>                                
+                <li class="breadcrumb-item"><a href="{{ path('Profil') }}">Profile</a></li>
+                <li class="breadcrumb-item active">Edit Password</li>
+            </ul>
+        </div>  
+    </div>
+</div>
+    <!-- form card change password -->
+                    <div class="card card-outline-secondary">
+                        
+                        <div class="card-body">
+                            <form class="form" role="form" autocomplete="off">
+                                <div class="form-group">
+                                    <label for="inputPasswordOld">Current Password</label>
+                                    <input type="password" class="form-control" id="inputPasswordOld" required="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNew">New Password</label>
+                                    <input type="password" class="form-control" id="inputPasswordNew" required="">
+                                    <span class="form-text small text-muted">
+                                            The password must be 8-20 characters, and must <em>not</em> contain spaces.
+                                        </span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNewVerify">Verify</label>
+                                    <input type="password" class="form-control" id="inputPasswordNewVerify" required="">
+                                    <span class="form-text small text-muted">
+                                            To confirm, type the new password again.
+                                        </span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success btn-lg float-right">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+    <!-- /form card change password -->
+{% endblock %}

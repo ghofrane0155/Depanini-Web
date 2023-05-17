@@ -1,0 +1,170 @@
+{% extends "Front/base.html.twig" %}
+
+{% block Navbar %}
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+            <a href="{{ path('app_index') }}" class="navbar-brand p-0">
+                <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>Depanini</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+						<a href="{{ path('app_index') }}" class="nav-item nav-link ">Home</a>
+						<a href="about.html" class="nav-item nav-link">About</a>
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <div class="nav-item dropdown">
+					    	<a href="{{path('ReadAllEvents')}}" class="nav-item nav-link active" data-bs-toggle="dropdown">Events</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{{path('ReadAllEvents')}}" class="dropdown-item">Available Events</a>
+                                <a href="ticketOfThisUser" class="dropdown-item">My Tickets</a>
+                            </div> 
+                            </div>
+                        {% endif %}
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Products</a>
+							<div class="dropdown-menu m-0">
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+								<a href="addProduit" class="dropdown-item">Add Product</a>
+                            {% endif %}
+								<a href="showProduit" class="dropdown-item">See Products</a>
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+                                <a href="mesProduits" class="dropdown-item">See My Products</a>
+                                <a href="mesCommandes" class="dropdown-item">Cart </a>
+                            {% endif %}
+
+                            </div>
+						</div>
+
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Contact</a>
+							<div class="dropdown-menu m-0">
+								<a href="{{path('addReclamation')}}" class="dropdown-item">Reclamtion</a>
+                            </div>
+						</div>
+                        {% if app.user.roles()== ["ROLE_FREELANCER","ROLE_USER"] %}
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Offres</a>
+                                    <div class="dropdown-menu m-0">
+                                    
+                                        <a href="{{path('ajout_offre')}}" class="dropdown-item">Add Offre</a>
+                                        <a href="{{path('afficher_frontoffre')}}" class="dropdown-item">See Offre</a>
+
+                                    </div>
+                                </div>                            
+                        {% endif %}
+
+                        {% if app.user.roles()== ["ROLE_CLIENT","ROLE_USER"] %}
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Entreprises</a>
+                                    <div class="dropdown-menu m-0">
+                                    
+                                        <a href="" class="dropdown-item">Add Entreprise</a>
+                                        <a href="" class="dropdown-item">See Entreprise</a>
+
+                                    </div>
+                                </div>                            
+                        {% endif %}
+                    {% endif %}
+
+                        
+					</div>
+                    <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal">
+						<i class="fa fa-search"></i>
+					</button>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+                        {% if is_granted('ROLE_USER') %}
+                            {% if is_granted('ROLE_ADMIN') %}          
+                             <a class="nav-item nav-link" href="{{ path('dashboard_home') }}"><i class="fa fa-chart-line"></i></a>                               
+                            {% endif %}
+
+                            <div class="dropdown">
+                                <button class="dropdown-toggle btn" type="button" id="user-dropdown" data-bs-toggle="dropdown" aria-expanded="false" >
+                                    <img
+                                        src="https://ui-avatars.com/api/?name={{ app.user.nomUser|url_encode }}&size=32&background=random"
+                                        alt="{{ app.user.nomUser }} Avatar">
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-dropdown">
+                                    <li>
+                                        <a class="nav-item nav-link " href="{{ path('Profil') }}">Profil</a>   
+                                        <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                        
+                    {% else %}
+                        <a class=" btn btn-primary py-2 px-4 ms-3" href="{{ path('app_login') }}">Log In</a>
+                        <a href="{{ path('app_signup') }}" class=" btn btn-primary py-2 px-4 ms-3">Sign up</a>
+                    {% endif %}
+            </div>
+        </nav>
+
+        {% block b2 %}
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+            <div class="row py-5">
+                <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-4 text-white animated zoomIn">Available Events</h1>
+                    <a href="" class="h5 text-white">Home</a>
+                    <i class="far fa-circle text-white px-2"></i>
+                    <a href="" class="h5 text-white">About</a>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+    </div>
+    <!-- Navbar End -->
+    {% endblock %}
+
+
+
+{% block body %}
+
+    
+    {% for flash in app.flashes('error') %}
+        <div class="flash-message flash-message-error">{{ flash }}</div><br>
+    {% endfor %}
+        <!-- Events Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold text-primary text-uppercase">Latest Events</h5>
+                <h1 class="mb-0"> Don't hesitate to participate !!</h1>
+            </div>
+            <div class="row g-5">
+               {% for l in Events %}
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                    <div class="blog-item bg-light rounded overflow-hidden">
+                        <div class="blog-img position-relative overflow-hidden">
+                            <img class="img-fluid" src="{{l.imageevent}}" alt="">
+                            <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">{{l.nomevent}}</a>
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex mb-3">
+                                <small class="me-3"><i class="far fa-user text-primary me-2"></i>{{l.organisateurevent}}</small>
+                                <small><i class="far fa-calendar-alt text-primary me-2"></i>{{l.datedebutevent|date('d/m/Y')}}</small>
+                            </div>
+                            <h4 class="mb-3">{{l.nomevent}}</h4>
+                            <p>{{l.descriptionevent}}</p>
+                            <p>PRICE : {{l.prixevent}} DT</p>
+                            <p>LOCATION : {{l.lieuevent}} </p>
+                            <a class="text-uppercase"onclick="window.location.href='{{path('addTicket',{'id':l.idevent})}}'">PARTICIPATE <i class="bi bi-arrow-right"></i></a>
+                            
+                        </div>
+                    </div>
+                </div>
+               {% endfor %} 
+               
+        
+            </div>
+            
+        </div>
+    </div>
+    <!-- Events Start -->
+
+{% endblock %}

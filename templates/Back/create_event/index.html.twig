@@ -1,0 +1,209 @@
+{% extends 'Back/base.html.twig' %}
+{% block Dashboard %} class="sm_menu_btm" {% endblock %}
+        {% block Confidentialite%} class="sm_menu_btm" {% endblock %}
+        {% block Profile%} class="sm_menu_btm" {% endblock %}
+        {% block Users%} class="sm_menu_btm" {% endblock %}
+        {% block Events%} class="active open" {% endblock %}
+        {% block Reclamation%} class="sm_menu_btm" {% endblock %}    
+        {% block Achats%} class="sm_menu_btm" {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{{asset('Back/plugins/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('Back/plugins/morrisjs/morris.css')}}" />
+    <link rel="stylesheet" href="{{asset('Back/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css')}}"/>
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{{asset('Back/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('Back/css/color_skins.css')}}">
+
+<!--  *******************nour Css ****************-->
+    <!-- Icons font CSS-->
+    <link href="{{asset('nourEvent/vendor/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{asset('nourEvent/vendor/font-awesome-4.7/css/font-awesome.min.css')}}" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="{{asset('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i')}}" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="{{asset('nourEvent/vendor/select2/select2.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{asset('nourEvent/vendor/datepicker/daterangepicker.css')}}" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="{{asset('nourEvent/css/main.css')}}" rel="stylesheet" media="all">
+<!--  *******************END nour Css ****************-->
+{% endblock %}
+
+
+{# 
+
+{% block css %}
+    <link rel="stylesheet" href="{{asset('Back/plugins/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('Back/plugins/morrisjs/morris.css')}}" />
+    <link rel="stylesheet" href="{{asset('Back/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css')}}"/>
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{{asset('Back/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('Back/css/color_skins.css')}}">
+
+<!--  *******************nour Css ****************-->
+    <!-- Icons font CSS-->
+    <link href="{{asset('nourEvent/vendor/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{asset('nourEvent/vendor/font-awesome-4.7/css/font-awesome.min.css')}}" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="{{asset('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i')}}" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="{{asset('nourEvent/vendor/select2/select2.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{asset('nourEvent/vendor/datepicker/daterangepicker.css')}}" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="{{asset('nourEvent/css/main.css')}}" rel="stylesheet" media="all">
+<!--  *******************END nour Css ****************-->
+{% endblock %} #}
+
+{% block body %}
+<section class="content home">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Dashboard</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="{{asset('dashboardhome')}}"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item active">Events/Create</li>
+                    </ul>
+                </div>            
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="input-group m-b-0">                
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-addon">
+                            <i class="zmdi zmdi-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- ***************************************************************************************************************-->
+    <!-- form create event -->
+
+        <div class="wrapper wrapper--w960" >
+            <div class="card card-2">
+                
+                <div class="card-body">
+                    <h2 class="title">Event creation</h2>
+                    {% if form_errors(form) %}
+    <div class="alert alert-danger">
+        {{ form_errors(form) }}
+    </div>
+                   {% endif %}
+                    {{form_start(form,{'attr': {'novalidate':'novalidate'}})}}
+                        <div class="row row-space">
+                                <div class="col-6">
+                                        <div class="input-group">
+                                            {{ form_widget(form.nomevent) }}
+                                            {{ form_errors(form.nomevent) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            {{ form_widget(form.organisateurevent) }}
+                                            {{ form_errors(form.organisateurevent) }}
+                                        </div>
+                                    </div>
+                        </div>
+
+                        <div class="row row-space">
+                            <div class="col-6">
+                                    <div class="input-group">
+                                        {{ form_widget(form.nombrelimevent) }}
+                                        {{ form_errors(form.nombrelimevent) }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        {{ form_widget(form.prixevent) }}
+                                        {{ form_errors(form.prixevent) }}
+                                    </div>
+                                </div>
+                    </div>
+
+                        
+
+                        <div class="row row-space">
+                            <div class="col-6">
+                                <div class="input-group">
+                                {# <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i> #}
+                                    {{ form_widget(form.datedebutevent) }}
+                                    {{ form_errors(form.datedebutevent) }}                                    
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                    <div class="input-group">
+                                    {# <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>  #}
+                                        {{ form_widget(form.datefinevent) }}
+                                        {{ form_errors(form.datefinevent) }}                                       
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                        <div class="col-6">
+                                <div class="input-group">
+                                    {{ form_widget(form.image) }}
+                                    {{ form_errors(form.image) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    {{ form_widget(form.lieuevent) }}
+                                    {{ form_errors(form.lieuevent) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                        <div class="col-6">
+                                <div class="input-group">
+                                    {{ form_widget(form.descriptionevent) }}
+                                    {{ form_errors(form.descriptionevent) }}
+                                </div>
+                            </div>
+                            </div>
+                            
+                        <div class="p-t-30">
+                            {{ form_widget(form.Create) }}
+                        </div>
+                    {{form_end(form )}}
+                </div>
+            </div>
+            </div>
+        </div>
+    <!-- END form create event -->
+     
+    </div>
+</section>
+{% endblock %}
+
+
+{% block js %}
+<!--*************** Js ************************-->
+    <!-- Jquery JS-->
+    <script src="{{asset('nourEvent/vendor/jquery/jquery.min.js')}}"></script>
+    <!-- Vendor JS-->
+    <script src="{{asset('nourEvent/vendor/select2/select2.min.js')}}"></script>
+    <script src="{{asset('nourEvent/vendor/datepicker/moment.min.js')}}"></script>
+    <script src="{{asset('nourEvent/vendor/datepicker/daterangepicker.js')}}"></script>
+
+    <!-- Main JS-->
+    <script src="{{asset('nourEvent/js/global.js')}}"></script>
+<!--*************** END Js ************************-->
+    <!-- Jquery Core Js -->
+    <script src="../Back/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+    <script src="../Back/bundles/vendorscripts.bundle.js"></script> <!-- slimscroll, waves Scripts Plugin Js -->
+
+    <script src="../Back/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
+    <script src="../Back/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
+    <script src="../Back/bundles/morrisscripts.bundle.js"></script> <!-- Morris Plugin Js --> 
+    <script src="../Back/bundles/sparkline.bundle.js"></script> <!-- sparkline Plugin Js --> 
+    <script src="../Back/bundles/doughnut.bundle.js"></script>
+
+    <script src="../Back/bundles/mainscripts.bundle.js"></script>
+    <script src="../Back/js/pages/index.js"></script>
+{% endblock %}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Change Password</title>
+    <style>
+      body {
+			margin: 0;
+			padding: 0;
+      background-color: #eceff1;
+		}
+		nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background-color: #fff;
+			color: #007ae1;
+			padding: 10px 20px;
+		}
+		nav h1 {
+			margin: 0;
+			font-size: 30px;
+			font-weight: normal;
+      font-weight: bold;
+
+		}
+		nav form {
+			display: flex;
+			align-items: center;
+		}
+		.user,
+		nav form input[type="password"] {
+			padding: 10px;
+			margin-right: 5px;
+			border-radius: 5px;
+			/* border: none; */
+			font-size: 16px;
+			width: 100%;
+		}
+		nav form input[type="submit"] {
+			background-color: #007ae1;
+			color: #fff;
+			padding:10px;
+			border-radius: 5px;
+			border: none;
+			font-size: 16px;
+			cursor: pointer;
+      width: 60%;
+      font-weight: bold;
+		}
+    nav form input[type="submit"]:hover {
+        background-color: #1569c7;
+      }
+
+    .login {
+        padding: 10px;
+        border-radius: 3px;
+        border: none;
+        background-color: #1877f2;
+        color: #ffffff;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #1569c7;
+      }
+
+      .user,
+      .userp {
+        padding: 10px;
+        border-radius: 3px;
+        border: 1px solid #cfcfcf;
+        background-color: #f0f2f5;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+        color: #222222;
+      }
+  
+  
+      .container {
+          background-color: #ffffff;
+          width: 550px;
+          margin: 50px auto;
+          border-radius: 10px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+           margin-top: 150px;
+        }
+        .container p {
+          font-size: 17px;
+        }
+  
+        .header {
+          background-color: #4267b2;
+          color: #ffffff;
+          padding: 20px;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+  
+        .header h1 {
+          font-size: 24px;
+          font-weight: normal;
+          margin: 0;
+        }
+  
+        .form {
+          padding: 20px;
+        }
+  
+        .form-group {
+          margin-bottom: 20px;
+        }
+  
+        .input-text {
+          padding: 10px;
+          border-radius: 3px;
+          border: 1px solid #cfcfcf;
+          background-color: #f0f2f5;
+          width: 400px;
+          box-sizing: border-box;
+          font-size: 16px;
+          color: #222222;
+        }
+  
+        .next {
+          padding: 10px;
+          border-radius: 3px;
+          border: none;
+          background-color: #1877f2;
+          color: #ffffff;
+          cursor: pointer;
+          width: 30%;
+          font-size: 16px;
+          font-weight: bold;
+        }
+  
+        .next:hover {
+          background-color: #1569c7;
+        }
+/************************************************/
+      .flash-message {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
+
+    .flash-message-success {
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+      color: #155724;
+    }
+
+    .flash-message-error {
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      color: #721c24;
+    }
+
+    .flash-message-info {
+      background-color: #d1ecf1;
+      border-color: #bee5eb;
+      color: #0c5460;
+    }
+
+    .flash-message-warning {
+      background-color: #fff3cd;
+      border-color: #ffeeba;
+      color: #856404;
+    }
+    </style>
+  
+  </head>
+  <body>
+    <nav>
+		<h1><a  style="text-decoration: none; color:#007ae1; " href="{{ path('app_login') }}">Depanini</a></h1>
+		<form>
+			<input class="user" type="text" placeholder="Username">
+			<input class="userp" type="password" placeholder="Password">
+			<input class="login" type="submit" value="Login">
+		</form>
+	</nav>
+  
+  <div class="container">
+
+   <section class="section register ">
+            {% for message  in app.flashes('message') %}
+                <div class="flash-message flash-message-info" >
+                    {{ message }}
+                </div>
+            {% endfor %}
+   </section>
+   <section class="section register ">
+            {% for danger  in app.flashes('danger') %}
+                <div class="flash-message flash-message-error" style="color:green">
+                    {{ danger }}
+                </div>
+            {% endfor %}
+    </section>
+  
+    <h1>Reset Password</h1>   
+      <form class="form" method="post">
+       
+        <div class="form-group">  
+         <input type="password" name="password" id="inputPass" class="input-text" placeholder="New password" required/>
+         <input type="hidden"  name="token" value="{token}">
+        </div>
+       
+        <div style="display:flex; justify-content:center;">
+          <button class="next" style="margin:auto;" type="submit">Next</button>
+        </div>
+        
+      </form>
+  </div>
+  </body>
+</html>

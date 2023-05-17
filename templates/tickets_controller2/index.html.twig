@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<title>Tickets index</title>
+
+{% block body %}
+    <h1>Tickets index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idticket</th>
+                <th>Quantite</th>
+                <th>Prixtotale</th>
+                <th>Login</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.idticket }}</td>
+                <td>{{ ticket.quantite }}</td>
+                <td>{{ ticket.prixtotale }}</td>
+                <td>{{ ticket.login }}</td>
+                <td>
+                    <a href="{{ path('app_tickets_controller2_show', {'idticket': ticket.idticket}) }}">show</a>
+                    <a href="{{ path('app_tickets_controller2_edit', {'idticket': ticket.idticket}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tickets_controller2_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,242 @@
+{% extends 'Back/base.html.twig' %}
+        {% block Dashboard %} class="sm_menu_btm" {% endblock %}
+        {% block Confidentialite%} class="sm_menu_btm" {% endblock %}
+        {% block Profile%} class="sm_menu_btm" {% endblock %}
+        {% block Users%} class="sm_menu_btm" {% endblock %}
+        {% block Events%} class="active open" {% endblock %}
+        {% block Reclamation%} class="sm_menu_btm" {% endblock %}    
+        {% block Achats%} class="sm_menu_btm" {% endblock %}
+
+{% block css %}
+        <link rel="stylesheet" href="{{ asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css') }}">
+
+        <link rel="stylesheet" href="{{asset('Back/plugins/bootstrap/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('Back/plugins/morrisjs/morris.css')}}" />
+        <link rel="stylesheet" href="{{asset('Back/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css')}}"/>
+        <!-- Custom Css -->
+        <link rel="stylesheet" href="{{asset('Back/css/main.css')}}">
+        <link rel="stylesheet" href="{{asset('Back/css/color_skins.css')}}">
+
+        <link rel="stylesheet" href="{{ asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css') }}">
+        <style>
+    .my-button {
+       background-image: linear-gradient(to right, #00c6ff, #0072ff);
+        color: #fff;
+        font-size: 18px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .my-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    </style>
+{% endblock %}
+{% block body %}
+
+  
+	
+    <section class="content home clearfix justify-content-center">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Events</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="{{asset('EventsController')}}"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item active">Events</li>
+                    </ul>
+                </div>            
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="input-group m-b-0">                
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-addon">
+                            <i class="zmdi zmdi-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="row clearfix">
+            <div class="col-lg-4 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="zmdi zmdi-balance zmdi-hc-3x col-amber"></i></p>
+                        <span>Total Revenue</span>
+                        <h3 class="m-b-10">DT <span class="number count-to" data-from="0" data-to="{{ totalRevenue }}" data-speed="2000" data-fresh-interval="700">578</span></h3>
+                        <small class="text-muted">27% lower growth</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="zmdi zmdi-assignment zmdi-hc-3x col-blue"></i></p>
+                        <span>Total Events</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="{{ totalEvents }}" data-speed="2000" data-fresh-interval="700"></h3>
+                        <small class="text-muted">88% lower growth</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="zmdi zmdi-shopping-basket zmdi-hc-3x"></i></p>
+                        <span>Total Sales</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="{{totalTickets}}" data-speed="2000" data-fresh-interval="700">3502</h3>
+                        <small class="text-muted">38% lower growth</small>
+                    </div>
+                    
+                </div>
+            </div>
+            
+<!-- ***************************************************************************************************************-->
+<!-- Hover Rows -->
+<a href="{{asset('fullcalendar')}}" class="menu-toggle"></i><span style="color: white; margin-left: 10px;">Calendar</span></a>
+                                </div>
+        <div class="row clearfix " >
+            <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="my-button">
+                                <a href="{{asset('fullcalendar')}}" class="menu-toggle"><i class="zmdi zmdi-calendar"></i><span style="color: white; margin-left: 10px;">Calendar</span></a>
+                                </div>
+                <div class="card" >
+                
+                     <h2 style="margin-left: 50px;"><strong>Events</strong> Chart</h2>
+                     
+                    <div class="body table-responsive clearfix " style="margin-top: 50px;">
+                       
+                             <canvas id="line-chart"></canvas>
+                    </div>
+                    <h2 style="margin-left: 50px;"><strong>Events</strong> List</h2>
+                    <div class="body table-responsive clearfix justify-content-center" style="margin-top: 20px">
+                        
+                        <table class="table table-hover">
+                        
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                <thead>
+                                <a href="{{ path('excel') }}" class="btn btn-primary">Download Excel</a>
+                                    <tr>
+                                        <th>#id</th>
+                                        <th>EVENT NAME</th>
+                                        <th>ORGANISER</th>
+                                        <th>PERIOD</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>LIMITED NUMBER</th>
+                                        <th>PRICE</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                {% for l in Events %}
+                                    <tr>
+                                    <th scope="row">{{l.idevent}}</th>
+                                    <td>{{l.nomevent}}</td>
+                                    <td>{{l.organisateurevent}}</td>
+                                    <td style: 'font-weight: bold color: #333 font-size: 1.2em'><div>START DATE :  {{l.datedebutevent|date('d/m/Y')}}</div><div>END DATE :  {{l.datefinevent|date('d/m/Y')}}</div></td>
+
+                                    
+                                    <td>{{l.descriptionevent}}</td>
+                                    <td>{{l.nombrelimevent}}</td>
+                                    <td>{{l.prixevent}}</td>
+                                    <td><a href="{{path('DeleteEvent',{'id':l.idevent} )}}"><i class="zmdi zmdi-delete"></i></a>
+                                        <a href="#"> </a>
+                                        <button onclick="window.location.href='{{path('updateEvent',{'id':l.idevent})}}';" style="border: none;background-color: #007bff00" >  <i class="zmdi zmdi-edit col-green zmdi-hc-2x"></i></button>
+                                        <button onclick="window.location.href='{{path('detailsEvent',{'id':l.idevent})}}';" style="border: none;background-color: #007bff00"> <i class="zmdi zmdi-info col-blue zmdi-hc-2x"></i></button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                                </tbody>
+                            </table>
+                        </table>
+                        
+                        
+                        
+                    </div>
+                        
+                    </div>
+                </div>
+            </div>
+          
+                    
+        </div>
+        <!-- #END# Hover Rows --> 
+
+    </div>
+</section>
+    
+    
+</div>
+{% endblock %}
+
+{% block js %}
+    <!-- Jquery Core Js -->
+    <script src="{{asset('Back/bundles/libscripts.bundle.js') }}" ></script>
+    <script src="{{asset('Back/bundles/vendorscripts.bundle.js')}}"></script>
+    <script src="{{asset('Back/bundles/mainscripts.bundle.js')}}"></script>
+    <script src="{{asset('Back/bundles/knob.bundle.js')}}"></script>
+    <script src="{{asset('Back/bundles/jvectormap.bundle.js')}}"></script> <!-- JVectorMap Plugin Js -->
+    <script src="{{asset('Back/bundles/morrisscripts.bundle.js')}}"></script> <!-- Morris Plugin Js -->
+    <script src="{{asset('Back/bundles/sparkline.bundle.js')}}"></script> <!-- sparkline Plugin Js -->
+    <script src="{{asset('Back/bundles/doughnut.bundle.js')}}"></script>
+    <script src="{{asset('Back/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+    <script src="{{asset('Back/bundles/mainscripts.bundle.js')}}"></script>
+    <script src="{{asset('Back/js/pages/index.js')}}"></script>
+    <script src="{{asset('Back/js/event.js')}}"></script>
+                    <!-- Jquery DataTable Plugin Js --> 
+    <script src="{{asset('Back/js/pages/tables/jquery-datatable.js')}}"></script>
+    <script src="{{asset('Back/bundles/datatablescripts.bundle.js')}}"></script>
+    <script src="{{asset('Back/plugins/jquery-datatable/buttons/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/jquery-datatable/buttons/buttons.colVis.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/jquery-datatable/buttons/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('Back/plugins/jquery-datatable/buttons/buttons.print.min.js')}}"></script>
+   <script src="{{asset('Back/js/pages/tables/jquery-datatable.js')}}"></script>
+    <script src="{{asset('Back/bundles/vendorscripts.bundle.js')}}"></script>
+    <script src="{{asset('Back/js/pages/forms/basic-form-elements.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+    <script>
+    
+    var chartData = {{ chartData|raw|json_encode|raw }};
+    console.log(chartData);
+
+    var labels = chartData.map(function(d) { return d.nomevent; });
+    var data = chartData.map(function(d) { return d.totalPrix; });
+
+    console.log(labels);
+    console.log(data);
+
+    var chart = new Chart('line-chart', {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Total Revenue',
+                data: data,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+                
+                
+            }
+        }
+    });
+     
+</script>
+{% endblock %}
+

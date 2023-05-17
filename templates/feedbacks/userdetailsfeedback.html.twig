@@ -1,0 +1,292 @@
+{% extends 'Back/base.html.twig' %}
+{% block Dashboard %}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Confidentialite%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Profile%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Users%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Events%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Reclamation%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block feedback%}
+	class="active open"
+{% endblock %}
+
+{% block Achats%}
+	class="sm_menu_btm"
+{% endblock %}
+
+
+{% block title %}Hello feedback!
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="{{asset('Back/plugins/bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('Back/plugins/morrisjs/morris.css')}}"/>
+	<link
+	rel="stylesheet" href="{{asset('Back/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css')}}"/>
+	<!-- Custom Css -->
+	<link rel="stylesheet" href="{{asset('Back/css/main.css')}}">
+	<link rel="stylesheet" href="{{asset('Back/css/color_skins.css')}}">
+	<link
+	rel="stylesheet" href="{{asset('Back/plugins/sweetalert/sweetalert.css')}}"/>
+	<!-- Bootstrap Material Datetime Picker Css -->
+	<link href="{{asset('Back/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}" rel="stylesheet"/>
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-BVYiiSIFeKuvPKGpCDWnOPNXyLW+UA1GZfNAdLYNXz3vfI7IUo/ZRpOy2mThOzIT" crossorigin="anonymous">
+{% endblock %}
+
+{% block st %}
+	<style>
+		.card {
+			min-height: 175px;
+			margin: 20px;
+			font-family: "Google Sans", sans-serif;
+			clear: both;
+		}
+		.card .card-body {
+			display: flex;
+			flex-direction: row;
+		}
+		.card .card-body .img-card {
+			max-width: 120px;
+			max-height: 120px;
+			border-radius: 50%;
+			margin-top: 7px;
+		}
+		.card .card-body .card-text {
+			vertical-align: middle;
+			margin: 0 0 0 25px;
+		}
+		.card .card-body .card-text .card-text-title {
+			font-size: 1.2em;
+			font-weight: 600;
+			margin-bottom: 0;
+		}
+		.card .card-body .card-text .card-text-subtitle {
+			font-size: 0.9em;
+			color: #bdc3c7;
+			margin-bottom: 10px;
+		}
+		.card .card-body .card-text .card-rating .card-rating-star {
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+		.card .card-body .card-text .card-rating .zmdi zmdi-star {
+			color: #f1c40f;
+		}
+		.card .card-body .card-text .card-rating .card-rating-count {
+			color: #3498db;
+		}
+		.card .card-body .card-text .card-address {
+			position: absolute;
+			bottom: 20px;
+			font-size: 0.9em;
+			margin-top: 20px;
+			color: #bdc3c7;
+			width: 400px;
+		}
+
+		.zmdi-star {
+			color: #f3e171;
+		}
+	</style>
+
+
+{% endblock %}
+{% block body %}
+	<section class="content">
+
+		<div class="container-fluid">
+			<div class="block-header">
+				<div class="row clearfix">
+					<div class="col-lg-5 col-md-5 col-sm-12">
+						<h2>Tables Feedbacks</h2>
+						<ul class="breadcrumb padding-0">
+							<li class="breadcrumb-item">
+								<a href="{{asset('dashboardhome')}}">
+									<i class="zmdi zmdi-home"></i>
+								</a>
+							</li>
+							<li class="breadcrumb-item active">
+								<a href="{{asset('dashboardhome')}}">
+									Feedbacks</a>
+							</li>
+							<li class="breadcrumb-item active">détail</li>
+						</ul>
+					</div>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<div class="input-group m-b-0">
+							<input type="text" class="form-control" placeholder="Search...">
+							<span class="input-group-addon">
+								<i class="zmdi zmdi-search"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row clearfix" style="display: flex;justify-content: center">
+				<div class="col-md-6 col-md-6 col-md-6">
+					<div class="card">
+
+						<div class="body">
+							<form>
+								<div class="user-info m-b-20" style="margin-left: 36%;">
+									<div class="image">
+										{# <a href="{{asset('profile.html')}}"><img style="width: 40%" src="{{asset('Back/images/imgUserProfile/' ~ user.photoUser)}}" alt="User"></a> #}
+										<a href="{{asset('profile.html')}}"><img style="width: 40%" src="{{asset(user.photoUser)}}" alt="User"></a>
+
+									</div>
+								</div>			
+								<div class="detail" style="margin-left: 36%;">
+									<h6 class="m-b-0 ">{{ user.nomUser ~ " " ~ user.prenomUser }}
+									</h6>
+								</div>
+								<label for="email_address">Email Address</label>
+								<div class="form-group">
+									<input type="text" id="email_address" class="form-control" value="{{ user.email }}" disabled>
+								</div>
+
+								<label>Dates de naissance :</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="zmdi zmdi-calendar"></i>
+									</span>
+									<input type="text" class="form-control datetimepicker" placeholder="-" value="{{user.dateNaisUser|date('d-m-Y')}}" disabled>
+								</div>
+
+							</form>
+
+							<hr>
+							<div class="text-center">
+									<label>le Rang actuel :</label>
+									<div class="knob-wrapper" style="display: flex;justify-content: space-evenly;align-content: flex-start;flex-wrap: wrap;align-items: center;">
+										{% set rankImage = '' %}
+										{% set rankBadge = '' %}
+
+										{% set color = '' %}
+
+										{% set rankStars = number_start_user %}
+										{% if rankStars >= 1 and rankStars <= 20 %}
+											{% set rankImage = 'iron.png' %}
+											{% set rankBadge = 'Iron' %}
+											{% set color = '#525452' %}
+										{% elseif rankStars > 10 and rankStars <= 40 %}
+											{% set rankImage = 'bronze.png' %}
+											{% set rankBadge = 'Bronze' %}
+											{% set color = '#8c6f47' %}
+										{% elseif rankStars > 20 and rankStars <= 60 %}
+											{% set rankImage = 'silver.png' %}
+											{% set rankBadge = 'Silver' %}
+											{% set color = '#b5bdba' %}
+
+											{% set color = '' %}
+										{% elseif rankStars > 50 and rankStars <= 80 %}
+											{% set rankImage = 'gold.png' %}
+											{% set rankBadge = 'Gold' %}
+
+											{% set color = '#f3e171' %}
+										{% else %}
+											{% set rankImage = 'platinum.png' %}
+											{% set rankBadge = 'Platinum' %}
+											{% set color = '#3d8586' %}
+										{% endif %}
+
+										<img class="knob-image" src="{{ asset('/Back/images/rank/' ~ rankImage) }}" style="width: 20%;" alt="">
+										<input id="inputii" type="text" class="knob" data-linecap="round" value="{{number_start_user}}" data-width="125" data-height="125" data-thickness="0.25" style="color:{{ color }} !important;" data-fgcolor="{{ color }}" readonly>
+									</div>
+									<p id="txt" class="text-muted m-b-0">{{ rankBadge }}</p>
+								</div>
+								<hr>
+							
+							
+							<div class="text-center">
+								<label>Tout les Feedbacks</label>
+								{% for f in allfeedbacks_of_user %}
+
+
+									<div class="card-body" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+										{% if f.photoUser is null %}
+											<img style="border-radius: 50%!important;width:20%" src="back/images/imgUserProfile/userlogo.png" alt="user">
+										{% else %}
+											{# <img style="border-radius: 50%!important;width:20%" src="{{ asset('/Back/images/imgUserProfile/' ~ f.photoUser) }}" alt="user"> #}
+											<img style="border-radius: 50%!important;width:20%" src="{{asset(f.photoUser) }}" alt="user">
+
+
+										{% endif %}
+										<div class="card-text">
+											<div>
+												<p class="card-text-title">
+													{{f.nomUser ~" "~ f.prenomUser}}
+												</p>
+												<p class="card-text-subtitle" style="max-width: 80%; margin: 0 auto;">
+													{{f.commentaire}}
+												</p>
+												<div class="card-rating">
+													{{f.stars}}
+													<br>
+													<span class="card-rating-star">
+														{% for i in range(1, 5) %}
+															{% if f.stars >= i %}
+																<i class="zmdi zmdi-star zmdi-hc-3x"></i>
+															{% else %}
+																<i class="zmdi zmdi-star-outline zmdi-hc-3x"></i>
+															{% endif %}
+														{% endfor %}
+													</span>
+												</div>
+											</div>
+										</div>
+										Deletet feedback
+										<a href="{{path('feedbacks_delete',{'idFeedback':f.idFeedback})}}">
+											<i class="zmdi zmdi-delete col-red zmdi-hc-2x"></i>
+										</a>
+									</div>
+
+									<hr>
+								{% endfor %}
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>{% endblock %}{% block js %}
+<!-- Jquery Core Js -->
+<script src={{asset('Back/bundles/libscripts.bundle.js') }}></script>
+<script src={{asset('Back/bundles/vendorscripts.bundle.js')}}></script>
+
+<script src="{{asset('Back/bundles/knob.bundle.js')}}"></script>
+<script src="{{asset('Back/bundles/jvectormap.bundle.js')}}"></script>
+<!-- JVectorMap Plugin Js -->
+<script src="{{asset('Back/bundles/morrisscripts.bundle.js')}}"></script>
+<!-- Morris Plugin Js -->
+<script src="{{asset('Back/bundles/sparkline.bundle.js')}}"></script>
+<!-- sparkline Plugin Js -->
+<script src="{{asset('Back/bundles/doughnut.bundle.js')}}"></script>
+<script src="{{asset('Back/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+<script src="{{asset('Back/bundles/mainscripts.bundle.js')}}"></script>
+<script src="{{asset('Back/js/pages/index.js')}}"></script>
+<script src="{{asset('Back/js/pages/forms/basic-form-elements.js')}}"></script>
+
+<script src="{{asset('Back/js/pages/index.js')}}"></script>
+<script src="{{asset('Back/plugins/momentjs/moment.js')}}"></script>
+<script src="{{asset('Back/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+
+
+
+{% endblock %}

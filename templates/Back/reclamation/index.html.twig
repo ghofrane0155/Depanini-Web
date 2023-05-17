@@ -1,0 +1,317 @@
+{% extends 'Back/base.html.twig' %}
+{% block Dashboard %}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Confidentialite%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Profile%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Users%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Events%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Reclamation%}
+	class="active open"
+{% endblock %}
+{% block Achats%}
+	class="sm_menu_btm"
+{% endblock %}
+
+
+{% block title %}Hello ReclamationController!
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="{{asset('Back/plugins/bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('Back/plugins/morrisjs/morris.css')}}"/>
+	<link
+	rel="stylesheet" href="{{asset('Back/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css')}}"/>
+	<!-- Custom Css -->
+	<link rel="stylesheet" href="{{asset('Back/css/main.css')}}">
+	<link rel="stylesheet" href="{{asset('Back/css/color_skins.css')}}">
+	<link rel="stylesheet" href="{{asset('Back/plugins/sweetalert/sweetalert.css')}}"/>
+{% endblock %}
+
+{% block body %}
+	<section class="content">
+		<div class="container-fluid">
+			<div class="block-header">
+				<div class="row clearfix">
+					<div class="col-lg-5 col-md-5 col-sm-12">
+						<h2>Tables Réclamation</h2>
+						<ul class="breadcrumb padding-0">
+							<li class="breadcrumb-item">
+								<a href="{{asset('dashboardhome')}}">
+									<i class="zmdi zmdi-home"></i>
+								</a>
+							</li>
+							<li class="breadcrumb-item active">Réclamation</li>
+						</ul>
+					</div>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<div class="input-group m-b-0">
+							<input id='searchInput' type="text" class="form-control" placeholder="Search...">
+							<span class="input-group-addon">
+								<i class="zmdi zmdi-search"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<div class="card">
+						<div class="body" style="align-items: center">
+
+							<div style="display: flex;justify-content: space-around;">
+								<span style="margin-top: 10px">Filtre Avec Etat</span>
+								<button style="margin-left: 55%" type="button" class="btn btn-round btn-simple btn-sm btn-success btn-filter" data-target="approved">Resolu</button>
+								<button type="button" class="btn btn-round btn-simple btn-sm btn-warning btn-filter" data-target="suspended">En attente</button>
+								<button type="button" class="btn btn-round btn-simple btn-sm btn-info btn-filter" data-target="pending">Ouvert</button>
+							</div>
+
+						</div>
+						<div class="header">
+							<h2>
+								<strong>List</strong>
+								Reclamations</h2>
+						</div>
+						
+						<div class="body">
+							<div class="table-responsive">
+								{% if app.session.flashBag.has('updatesuccess') %}
+
+
+									{% set successMessages = app.session.flashBag.get('updatesuccess') %}
+									{% if successMessages|length > 0 %}
+										<div class="alert alert-info" id="success-message">
+											{{ successMessages[0] }}
+										</div>
+										<script>
+											setTimeout(function () {
+document.getElementById("success-message").style.display = "none";
+}, 5000); // 5000 milliseconds = 5 seconds
+										</script>
+										{% do app.session.flashBag.clear('updatesuccess') %}
+
+									{% endif %}
+								{% endif %}
+
+								{% if app.session.flashBag.has('removerec') %}
+
+									{% set successMessages = app.session.flashBag.get('removerec') %}
+									{% if successMessages|length > 0 %}
+										<div class="alert alert-warning" id="success-message">
+											{{ successMessages[0] }}
+										</div>
+										<script>
+											setTimeout(function () {
+document.getElementById("success-message").style.display = "none";
+}, 5000); // 5000 milliseconds = 5 seconds
+										</script>
+										{% do app.session.flashBag.clear('updatesuccess') %}
+
+									{% endif %}
+								{% endif %}
+
+
+								{% if app.session.flashBag.has('successadmin') %}
+
+
+									{% set successMessages = app.session.flashBag.get('successadmin') %}
+									{% if successMessages|length > 0 %}
+										<div class="alert alert-success" id="success-message">
+											{{ successMessages[0] }}
+										</div>
+										<script>
+											setTimeout(function () {
+document.getElementById("success-message").style.display = "none";
+}, 5000); // 5000 milliseconds = 5 seconds
+										</script>
+										{% do app.session.flashBag.clear('successadmin') %}
+
+									{% endif %}
+								{% endif %}
+
+								<table class="table table-filter table-hover m-b-0">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>
+												<div class="media-object"><img src="assets/images/xs/avatar1.jpg" alt="" width="35px" class="rounded-circle"></div>
+											</th>
+											<th>name</th>
+											<th>Titre de la Reclamation</th>
+											<th style="display: flex;justify-content: center">Etat Reclamation</th>
+											<th>Date de creation</th>
+											<th>Date de résolution</th>
+
+											<th style="display: flex;justify-content: center">Action</th>
+										</tr>
+									</thead>
+									<button class="btn btn-info"><a href="{{path('pdfreclamation')}}"> + imprimer </a></button>
+
+									{% for rec in listReclamations %}
+										<tbody>
+
+											<tr data-status="{% if rec.statut == "Ouvert" %}pending{% elseif rec.statut == 'Resolu' %}approved{% else %}suspended{% endif %}">
+												<td>{{ loop.index }}</td>
+												<td>
+													<div class="media-object">
+														{% if rec.idUser is null %}
+															<img class="rounded-circle" src="{{ asset('/Back/images/imgUserProfile/userlogo.png') }}" alt="">
+														{% else %}
+
+															<img class="rounded-circle" src="{{ asset('/Back/images/imgUserProfile/' ~ rec.idUser.photoUser) }}" alt="">
+														{% endif %}
+													</div>
+												</td>
+												<td>
+													{% if rec.idUser is null %}
+														Visiteur
+													{% else %}
+														{{rec.idUser.nomUser}}
+
+													{% endif %}
+												</td>
+												<td>{{rec.type}}</td>
+												<td style="display: flex;justify-content: center">
+													<span class="{% if rec.statut == "Ouvert" %}badge badge-info {% elseif rec.statut == 'Resolu' %}badge badge-success{% else %}badge badge-warning{% endif %}">{{rec.statut}}</span>
+												</td>
+												<td>{{rec.dateReclamation|date('d-m-Y')}}</td>
+												<td>
+													{% if rec.dateResolution == null %}
+														-
+													{% else %}
+														{{rec.dateResolution|date('d-m-Y')}}
+													{% endif %}
+												</td>
+												<td style="display: flex;justify-content: space-around">
+													<div class="js-sweetalert">
+														<button onclick="myfunction({{ rec.idReclamation }})" style="border: none;background-color: #007bff00;" data-type="cancel">
+															<i class="zmdi zmdi-delete col-red zmdi-hc-2x"></i>
+														</button>
+														<a href="#"></a>
+														<button onclick="window.location.href='{{path('updateReclamation',{'id':rec.idReclamation})}}';" style="border: none;background-color: #007bff00">
+															<i class="zmdi zmdi-edit col-green zmdi-hc-2x"></i>
+														</button>
+														<button onclick="window.location.href='{{path('detailsReclamation',{'id':rec.idReclamation})}}';" style="border: none;background-color: #007bff00">
+															<i class="zmdi zmdi-info col-blue zmdi-hc-2x"></i>
+														</button>
+													</div>
+												</td>
+											</tr>
+
+										</tbody>
+									{% endfor %}
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+{% block js %}
+	<!-- Jquery Core Js -->
+	<script src="{{asset('Back/bundles/libscripts.bundle.js')}}"></script>
+	<!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+	<script src="{{asset('Back/bundles/vendorscripts.bundle.js')}}"></script>
+	<!-- slimscroll, waves Scripts Plugin Js -->
+
+	<script src="{{asset('Back/bundles/knob.bundle.js')}}"></script>
+	<!-- Jquery Knob-->
+	<script src="{{asset('Back/bundles/jvectormap.bundle.js')}}"></script>
+	<!-- JVectorMap Plugin Js -->
+	<script src="{{asset('Back/bundles/morrisscripts.bundle.js')}}"></script>
+	<!-- Morris Plugin Js -->
+	<script src="{{asset('Back/bundles/sparkline.bundle.js')}}"></script>
+	<!-- sparkline Plugin Js -->
+	<script src="{{asset('Back/bundles/doughnut.bundle.js')}}"></script>
+
+	<script src="{{asset('Back/bundles/mainscripts.bundle.js')}}"></script>
+
+	<script>
+		$(document).ready(function () {
+$('.star').on('click', function () {
+$(this).toggleClass('star-checked');
+});
+
+$('.ckbox label').on('click', function () {
+$(this).parents('tr').toggleClass('selected');
+});
+
+$('.btn-filter').on('click', function () {
+var $target = $(this).data('target');
+if ($target != 'all') {
+$('.table tr').css('display', 'none');
+$('.table tr[data-status="' + $target + '"]').fadeIn('slow');
+} else {
+$('.table tr').css('display', 'none').fadeIn('slow');
+}
+});
+});
+	</script>
+	<script src="Back/plugins/sweetalert/sweetalert.min.js"></script>
+	<!-- SweetAlert Plugin Js -->
+	<script>
+		$(function () {
+$('.js-sweetalert button').on('click', function () {
+if (type === 'cancel') {
+myfunction(id);
+}
+});
+});
+
+
+function myfunction(id) {
+console.log(id);
+console.log("Êtes-vous sûr ?");
+swal({
+title: "Êtes-vous vraiment sûr(e) ?",
+text: "Vous ne pourrez pas récupérer ces donnes !",
+type: "warning",
+showCancelButton: true,
+confirmButtonColor: "#DD6B55",
+confirmButtonText: "Oui, supprimez-le !",
+cancelButtonText: "Non, annulez s'il vous plaît !",
+closeOnConfirm: false,
+closeOnCancel: false
+}, function (isConfirm) {
+if (isConfirm) {
+console.log("Supprimé !");
+swal("Supprimé !", "Votre donnes a été supprimé.", "success");
+window.location.href = 'http://127.0.0.1:8000/deleteReclamation/' + id;
+} else {
+console.log("Annulé !");
+swal("Annulé !", "Votre fichier imaginaire est en sécurité :)", "error");
+}
+});
+}
+	</script>
+
+	<script>
+        function filterTable() {
+            const filter = document.getElementById('searchInput').value.toUpperCase();
+            const rows = document.querySelectorAll('table tr');
+            for (let i = 1; i < rows.length; i++) {
+                const cols = rows[i].querySelectorAll('td');
+                let visible = false;
+                for (let j = 0; j < cols.length; j++) {
+                    const cell = cols[j];
+                    if (cell.innerText.toUpperCase().indexOf(filter) > -1) {
+                        visible = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = visible ? '' : 'none';
+            }
+        }
+        document.getElementById('searchInput').addEventListener('keyup', filterTable);
+    </script>
+{% endblock %}

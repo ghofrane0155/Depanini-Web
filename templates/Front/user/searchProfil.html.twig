@@ -1,0 +1,63 @@
+{% extends 'Front/base.html.twig' %}
+
+{% block title %}Profils{% endblock %}
+
+{% block css2 %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+{% endblock %}
+
+{% block b2 %}
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+            <div class="row py-5">
+                <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-4 text-white animated zoomIn">Résultats de recherche</h1>
+    
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+{% block body %}
+
+<!-- Team Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                <h1 class="mb-0">Personnes</h1>
+            </div>
+            <div class="row g-5">
+                {% for u in User %}
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                    <div class="team-item bg-light rounded overflow-hidden">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="{{asset(u.photoUser)}}" alt="" width="500px" height="500px">
+                            <div class="team-social">
+                                <a class="btn  btn-primary" href="https://api.whatsapp.com/send?phone={{ u.tel }}&text=Hello, I came across your profile.Please let me know if you're open to connecting and we can schedule a call or a meeting at your convenience. "><i class="fa fa-whatsapp my-float"></i></a>
+                                <a class="btn  btn-primary" href="mailto:{{ u.email }}?subject=Email Subject&body=Hello, I came across your profile.Please let me know if you're open to connecting and we can schedule a call or a meeting at your convenience."><i class="fa fa-envelope my-float "></i></a>
+
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <h4 class="text-primary">{{ u.nomUser }} {{ u.prenomUser }}</h4>
+                             <h6 class="text-primary">@{{ u.login }}</h6>
+
+                             
+                            <p class="text-uppercase m-0">{{ u.role }}</p>
+
+                           <a class="btn  btn-primary" href="{{path('new_feedback',{'id_simpleuser':u.idUser})}}">
+									<i class="fa fa-comment my-float" style="margin-left:2px;"></i>
+									Envoyer feedback</a>
+
+                        </div>
+                    </div>
+                </div>
+                
+                
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Team End -->
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'Front/base.html.twig' %}
+
+{% block title %}Ajouter une offre{% endblock %}
+ {% block b2 %}
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+            <div class="row py-5">
+               <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-4 text-white animated zoomIn">Espace des offres</h1>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+{% block body %}
+
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold text-primary text-uppercase">Les offres</h5>
+                <h1 class="mb-0">Consulter tous les offres ici !! </h1>
+            </div>
+            <div class="row g-5">
+                {% for offre in offre %}
+                    <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                        <div class="blog-item bg-light rounded overflow-hidden">
+                            <div class="blog-img position-relative overflow-hidden">
+                                {# <img class="img-fluid"  src="{{ asset('uploads/imageOffre/' ~ offre.imageOffre) }}" alt=""> #}
+                                <img class="img-fluid" src="{{ offre.imageOffre }}" alt="" >
+
+                                <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">{{ offre.localisationOffre }}</a>
+                            </div>
+                            <div class="p-4">
+                                <div class="d-flex mb-3">
+                                    <small class="me-3"><i class="far fa-user text-primary me-2"></i>{{ offre.idUser.nomUser }}</small>
+                                    <small><i class="far fa-text-alt text-primary me-2"></i>{{ offre.nomOffre }}</small>
+                                </div>
+                                <h4 class="mb-3">{{ offre.typeOffre }}</h4>
+                                <h4 class="mb-3">{{ offre.prixOffre }}</h4>
+                                <p>{{ offre.descriptionOffre }}</p>
+                                <div class="mapouter"><div class="gmap_canvas"><iframe  id="gmap_canvas" src="https://maps.google.com/maps?q={{offre.localisationOffre}}&t=k&z=13&ie=UTF8&iwloc=&output=embed"width="100%" height="400" frameborder="0" style="border:0" allowfullscreen  scrolling="yes" marginheight="0" marginwidth="0"></iframe><a href="https://putlocker-is.org">  </a><br>
+                                        </div></div>
+                                
+                             {% if app.user.roles()== ["ROLE_FREELANCER","ROLE_USER"] %}
+                                {% if app.user.idUser()== offre.idUser.idUser %}
+                                 <a class="btn btn-primary" href="{{ path('modifier_offre', {'id': offre.idOffre}) }}">Modifier</a>
+                                 <a class="btn btn-danger" href="{{ path('supprimer_offre', {'id': offre.idOffre}) }}">Supprimer</a>                          
+                                {% endif %}
+                            {% endif %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <ul class="pagination">
+                                    
+                                        <li class="page-item"><a class="">{{ knp_pagination_render(offre) }}</a></li>
+                                        
+                                    </ul>
+        </div>
+    </div>
+
+{% endblock %}

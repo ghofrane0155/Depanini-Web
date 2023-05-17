@@ -1,0 +1,137 @@
+{% extends 'Back/base.html.twig' %}
+        {% block Dashboard %} class="sm_menu_btm" {% endblock %}
+        {% block Confidentialite%} class="sm_menu_btm" {% endblock %}
+        {% block Profile%} class="sm_menu_btm" {% endblock %}
+        {% block Users%} class="sm_menu_btm" {% endblock %}
+        {% block Events%} class="sm_menu_btm" {% endblock %}
+        {% block Reclamation%} class="active open" {% endblock %}
+        {% block Achats%} class="sm_menu_btm" {% endblock %}
+
+
+{% block title %}Hello ReclamationController!{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{asset('Back/plugins/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('Back/plugins/morrisjs/morris.css')}}" />
+    <link rel="stylesheet" href="{{asset('Back/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css')}}"/>
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{{asset('Back/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('Back/css/color_skins.css')}}">
+    <link rel="stylesheet" href="{{asset('Back/plugins/sweetalert/sweetalert.css')}}"/>
+    <!-- Bootstrap Material Datetime Picker Css -->
+    <link href="{{asset('Back/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}" rel="stylesheet" />
+
+{% endblock %}
+
+{% block body %}
+    <section class="content">
+
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Tables Réclamation</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="{{asset('dashboardhome')}}"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item active"> <a href="{{asset('reclamation')}}"> Réclamation</a> </li>
+                            <li class="breadcrumb-item active">détail</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-12">
+                        <div class="input-group m-b-0">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-addon">
+                            <i class="zmdi zmdi-search"></i>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% for rec in OneReclamations %}
+            <div class="row clearfix" style="display: flex;justify-content: center">
+                <div class="col-md-6 col-md-6 col-md-6">
+                    <div class="card">
+                        <div class="body">
+                            {{ form_start(updatefrom) }}
+                                <div class="user-info m-b-20" style="margin-left: 36%;">
+                                    <div class="image">
+                                        {# <a href="{{asset('profile.html')}}"><img style="width: 40%" src="{{asset('Back/images/imgUserProfile/' ~ rec.idUser.photoUser)}}" alt="User"></a> #}
+                                  <a href="{{asset('profile.html')}}"><img style="width: 40%" src="{{asset(rec.idUser.photoUser)}}" alt="User"></a>
+
+                                    </div>
+                                </div>
+                                <div class="detail" style="margin-left: 36%;">
+                                    <h6 class="m-b-0">{{ rec.idUser.nomUser ~ " " ~ rec.idUser.prenomUser }} </h6>
+                                </div>
+                                <label for="email_address">Email Address</label>
+                                <div class="form-group">
+                                    <input type="text" id="email_address" class="form-control" name="email" value="{{ rec.idUser.email }}" disabled>
+                                </div>
+                                <label >Etat recalamation:</label>
+                                <div class="form-group">
+                                    <input type="text" id="" class="form-control" value="{{ rec.statut }}" disabled>
+                                </div>
+
+                                <label >Dates de Création:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="zmdi zmdi-calendar"></i>
+                                    </span>
+                                    <input type="text" class="form-control datetimepicker" placeholder="-" value="{{rec.dateReclamation|date('d-m-Y')}}" disabled>
+                                </div>
+                                <label >Type recalamation:</label>
+                                <div class="form-group">
+                                    <input type="text" id="" class="form-control" value="{{rec.type}}" disabled>
+                                </div>
+                                <label >Dates de résolution:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="zmdi zmdi-calendar"></i>
+                                    </span>
+                                    <input type="text" class="form-control datetimepicker" placeholder="-" name="dateReclamationnn" required >
+                                </div>
+
+                                <label >Piéce jointe:</label>
+                                <div class="form-group">
+                                    <input type="text" id="" value="{{rec.pieceJointe}}" class="form-control"  disabled>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <textarea rows="4" class="form-control no-resize" placeholder="Please type what you want..." disabled>{{rec.description}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{ form_rest(updatefrom) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+{% endblock %}
+
+{% block js %}
+    <!-- Jquery Core Js -->
+    <script src={{asset('Back/bundles/libscripts.bundle.js') }} ></script>
+    <script src={{asset('Back/bundles/vendorscripts.bundle.js')}}></script>
+
+    <script src="{{asset('Back/bundles/knob.bundle.js')}}"></script>
+    <script src="{{asset('Back/bundles/jvectormap.bundle.js')}}"></script> <!-- JVectorMap Plugin Js -->
+    <script src="{{asset('Back/bundles/morrisscripts.bundle.js')}}"></script> <!-- Morris Plugin Js -->
+    <script src="{{asset('Back/bundles/sparkline.bundle.js')}}"></script> <!-- sparkline Plugin Js -->
+    <script src="{{asset('Back/bundles/doughnut.bundle.js')}}"></script>
+    <script src="{{asset('Back/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+    <script src="{{asset('Back/bundles/mainscripts.bundle.js')}}"></script>
+    <script src="{{asset('Back/js/pages/index.js')}}"></script>
+    <script src="{{asset('Back/js/pages/forms/basic-form-elements.js')}}"></script>
+
+    <script src="{{asset('Back/js/pages/index.js')}}"></script>
+    <script src="{{asset('Back/plugins/momentjs/moment.js')}}"></script>
+    <script src="{{asset('Back/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+
+{% endblock %}
+
+

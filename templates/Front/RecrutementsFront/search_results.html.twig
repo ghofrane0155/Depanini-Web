@@ -1,0 +1,35 @@
+{# templates/Front/RecrutementsFront/search_results.html.twig #}
+
+{% extends 'Front/RecrutementsFront/base.html.twig' %}
+
+{% block content %}
+    <h1>Search Results</h1>
+
+    {% if recrutement|length == 0 %}
+        <p>No products found.</p>
+    {% else %}
+        <ul>
+                <div class="row g-5">
+                {% for rec in recrutement %}
+                    <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                        <div class="blog-item bg-light rounded overflow-hidden">
+                            <div class="blog-img position-relative overflow-hidden">
+                                <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">{{ rec.salaire }}</a>
+                            </div>
+                            <div class="p-4">
+                                <div class="d-flex mb-3">
+                                    <small class="me-3"><i class="far fa-user text-primary me-2"></i>{{ rec.idclient }}</small>
+                                    <small><i class="far fa-text-alt text-primary me-2"></i>{{ rec.description }}</small>
+                                </div>
+                                <h4 class="mb-3">{{ rec.date|date('Y-m-d') }}</h4>
+                                <p>{{ rec.nom }}</p>
+                                <a class="btn btn-primary" href="{{ path('modifier_recrutement', {'id': rec.reference}) }}">Modifier</a>
+                                <a class="btn btn-danger" href="{{ path('supprimer_recrutement', {'id': rec.reference}) }}">Supprimer</a>
+                                <a class="btn btn-danger" href="{{ path('ajout_contrat') }}">Signez votre contrat avec l'entreprise</a> </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </ul>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'Back/base.html.twig' %}
+{% block title %}Modifier categorie{% endblock %}  
+{% block body %}
+{{ form_start(f,{'attr': {'novalidate': 'novalidate'}} ) }}
+
+<section class="content">  
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Form Validation</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Forms</a></li>
+                        <li class="breadcrumb-item active">Form Validation</li>
+                    </ul>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="input-group m-b-0">                
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-addon">
+                            <i class="zmdi zmdi-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Basic Validation -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Basic</strong> Validation</h2>
+                        <ul class="header-dropdown">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                
+                                    <li><a href="javascript:void(0);" class="boxs-close">Delete</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        
+                            <div class="form-group form-float">
+                             {{ form_widget(f.nomCategorie, {'attr': {'class': 'form-control','placeholder': 'nom'}}) }}
+                             
+                            </div>
+                        
+                             <div class="form-group form-float">
+                                 {{ form_widget(f.imageCategorie, {'attr': {'class': 'form-control','placeholder': ''}}) }}
+                            </div>
+                           
+
+                              
+
+                            <button class="btn btn-raised btn-primary btn-round waves-effect" type="submit">SUBMIT</button>
+
+                                                {{ form_end(f) }}
+
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+{% endblock %}

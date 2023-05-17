@@ -1,0 +1,145 @@
+{% extends 'Back/base.html.twig' %}
+{% block Dashboard %}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Confidentialite %}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Profile %}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Users %}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Events %}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Reclamation %}
+	class="active open"
+{% endblock %}
+{% block Produits %}
+	class="sm_menu_btm"
+{% endblock %}
+
+
+{% block title %}Hello ReclamationController!
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="{{ asset('Back/plugins/bootstrap/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('Back/plugins/morrisjs/morris.css') }}"/>
+	<link
+	rel="stylesheet" href="{{ asset('Back/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css') }}"/>
+	<!-- Custom Css -->
+	<link rel="stylesheet" href="{{ asset('Back/css/main.css') }}">
+	<link rel="stylesheet" href="{{ asset('Back/css/color_skins.css') }}">
+	<link
+	rel="stylesheet" href="{{ asset('Back/plugins/sweetalert/sweetalert.css') }}"/>
+	<!-- Bootstrap Material Datetime Picker Css -->
+	<link href="{{ asset('Back/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet"/>
+
+{% endblock %}
+
+{% block body %}
+	<section class="content">
+
+		<div class="container-fluid">
+			<div class="block-header">
+				<div class="row clearfix">
+					<div class="col-lg-5 col-md-5 col-sm-12">
+						<h2>Tables Réclamation</h2>
+						<ul class="breadcrumb padding-0">
+							<li class="breadcrumb-item">
+								<a href="{{ asset('dashboardhome') }}">
+									<i class="zmdi zmdi-home"></i>
+								</a>
+							</li>
+							<li class="breadcrumb-item active">
+								<a href="{{ asset('reclamation') }}">
+									Réclamation</a>
+							</li>
+							<li class="breadcrumb-item active">détail</li>
+						</ul>
+					</div>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<div class="input-group m-b-0">
+							<input type="text" class="form-control" placeholder="Search...">
+							<span class="input-group-addon">
+								<i class="zmdi zmdi-search"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row clearfix" style="display: flex;justify-content: center">
+				<div class="col-md-6 col-md-6 col-md-6">
+					<div class="card">
+						<div class="body">
+							{{ form_start(addform)  }}
+							<label for="email_address">Email Address</label>
+							<div class="form-group">
+								<input type="email" id="email_address" class="form-control" name="email" required formnovalidate>
+
+							</div>
+
+
+							{#                            <label>Dates de Création:</label>#}
+							{#                            <div class="input-group">#}
+							{#                                    <span class="input-group-addon">#}
+							{#                                        <i class="zmdi zmdi-calendar"></i>#}
+							{#                                    </span>#}
+							{#                                <input type="text" class="form-control datetimepicker" placeholder="select date" >#}
+							{#                            </div>#}<label>Type recalamation:
+							</label>
+								<div class="form-group"> {{ form_widget(addform.type , {'attr': {'class': 'form-control'}}) }}
+							</div>
+
+
+							<label>Piéce jointe:</label>
+							<div class="form-group">
+								{{ form_widget(addform.pieceJointe , {'required': true} ,{'attr': {'class': 'form-control'}}) }}
+								{{ form_errors(addform.pieceJointe) }}
+							</div>
+
+
+							<label>description sur recalamation:</label>
+							<div class="form-group">
+								{{ form_widget(addform.description, {'attr': {'class': 'form-control', 'novalidate': 'novalidate'}}) }}
+								{{ form_errors(addform.description) }}
+							</div>
+							{{ form_rest(addform) }}
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block js %}
+	<!-- Jquery Core Js -->
+	<script src="{{ asset('Back/bundles/libscripts.bundle.js') }}"></script>
+	<script src="{{ asset('Back/bundles/vendorscripts.bundle.js') }}"></script>
+
+	<script src="{{ asset('Back/bundles/knob.bundle.js') }}"></script>
+	<script src="{{ asset('Back/bundles/jvectormap.bundle.js') }}"></script>
+	<!-- JVectorMap Plugin Js -->
+	<script src="{{ asset('Back/bundles/morrisscripts.bundle.js') }}"></script>
+	<!-- Morris Plugin Js -->
+	<script src="{{ asset('Back/bundles/sparkline.bundle.js') }}"></script>
+	<!-- sparkline Plugin Js -->
+	<script src="{{ asset('Back/bundles/doughnut.bundle.js') }}"></script>
+
+	<script src="{{ asset('Back/bundles/mainscripts.bundle.js') }}"></script>
+	<script src="{{ asset('Back/js/pages/index.js') }}"></script>
+	<script src="{{ asset('Back/js/pages/forms/basic-form-elements.js') }}"></script>
+
+	<script src="{{ asset('Back/js/pages/index.js') }}"></script>
+
+	<script src="{{ asset('Back/plugins/momentjs/moment.js') }}"></script>
+	<script src="{{ asset('Back/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+
+{% endblock %}

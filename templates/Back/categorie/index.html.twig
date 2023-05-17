@@ -1,0 +1,167 @@
+{% extends 'Back/base.html.twig' %}
+{% block Dashboard %}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Confidentialite%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Profile%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Users%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Events%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Reclamation%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Offres%}
+	class="active open"
+{% endblock %}
+{% block Demandes%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Achats%}
+	class="sm_menu_btm"
+{% endblock %}
+
+{% block title %}Hello CategorieController!
+{% endblock %}
+
+{% block body %}
+
+
+	<section class="content">
+
+
+		<div class="container-fluid">
+
+
+			<div class="block-header">
+				<div class="row clearfix">
+					<div class="col-lg-5 col-md-5 col-sm-12">
+						<h2>Liste des Categories</h2>
+						<ul class="breadcrumb padding-0">
+							<li class="breadcrumb-item">
+								<a href="{{asset('dashboardhome')}}">
+									<i class="zmdi zmdi-home"></i>
+								</a>
+							</li>
+							<li class="breadcrumb-item">Categorie</li>
+
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<!-- Basic Examples -->
+			<div class="row clearfix">
+				<div class="col-lg-12">
+					<div class="card">
+						<div class="header">
+							<h2>
+								Liste des
+								<strong>Categories</strong>
+							</h2>
+							<ul class="header-dropdown">
+								<li class="dropdown">
+									<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+										<i class="zmdi zmdi-more"></i>
+									</a>
+									<ul class="dropdown-menu slideUp">
+										<li>
+											<a href="javascript:void(0);">Categories</a>
+										</li>
+										<li>
+											<a href="javascript:void(0);">Categories</a>
+										</li>
+									</ul>
+								</li>
+								<li class="remove">
+									<a role="button" class="boxs-close">
+										<i class="zmdi zmdi-close"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="body">
+						<button class="btn btn-info">
+								<a href="{{path('ajout_categorie')}}" style="font-weight: bold;
+										    color: white;
+										    font-size: 19px;">
+									<i class="zmdi zmdi-plus-1 3x"></i>
+									Ajouter
+								</a>
+							</button>
+							<div class="table-responsive" id='myTable'>
+								<table class="table table-bordered  table-hover js-basic-example dataTable">
+									<thead>
+										<tr>
+											<th>Nom Categorie</th>
+											<th>Image</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+
+									<tbody>
+
+										<div>
+											<input type="search" id="myInput" class="form-control pl-6" placeholder="Search "/><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+											<script>
+												$(document).ready(function () {
+$("#myInput").on("keyup", function () {
+var value = $(this).val().toLowerCase();
+$("#myTable tr ").filter(function () {
+$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+});
+})
+});
+											</script>
+										</div>
+										<br>
+										{% for c in categorie %}
+											<tr>
+												<td>{{c.nomCategorie}}</td>
+
+												<td>{{c.imageCategorie}}</td>
+
+
+												{# <td>  <a  href=" {{ path('modif_offre',{'id':o.id}) }} "  class="btn btn-raised btn-primary btn-round waves-effect"> Modifier </a></td>  #}
+												<td>
+													<a href=" {{ path('modif_categorie',{'id':c.idCategorie}) }} " class="btn btn-raised btn-primary btn-round waves-effect">
+														Modifier
+													</a>
+													<a href=" {{ path('supp_categorie',{'id':c.idCategorie}) }} " class="btn btn-raised btn-primary btn-round waves-effect">
+														Supprimer
+													</a>
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+						<script src="//code.highcharts.com/4.0.1/highcharts.js"></script>
+
+						<script src="//code.highcharts.com/4.0.1/modules/exporting.js"></script>
+
+
+						<div id="piechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+						{# empty
+						
+						Twig template #}
+
+
+					</div>
+				</div>
+			</div>
+			<!-- #END# Basic Examples -->
+
+			<!-- #END# Exportable Table -->
+		</div>
+	</section>
+{% endblock %}

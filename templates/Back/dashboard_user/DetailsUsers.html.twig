@@ -1,0 +1,183 @@
+{% extends 'Back/base.html.twig' %}
+        {% block Dashboard %} class="sm_menu_btm" {% endblock %}
+        {% block Profile%} class="sm_menu_btm" {% endblock %}
+        {% block Users%} class="active open" {% endblock %}
+        {% block Events%} class="sm_menu_btm" {% endblock %}
+        {% block Reclamation%} class="sm_menu_btm" {% endblock %}    
+        {% block Offres%} class="sm_menu_btm" {% endblock %} 
+        {% block Demandes%} class="sm_menu_btm" {% endblock %}   
+        {% block Produits%} class="sm_menu_btm" {% endblock %}
+
+{% block body %}
+<section class="content home">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Dashboard</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="{{asset('dashboardhome')}}"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item active">Users</li>
+                    </ul>
+                </div>            
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="input-group m-b-0">                
+
+                            <input type="search" id="myInput" class="form-control" placeholder="Search..."/>
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+                            <script>$(document).ready(function () {$("#myInput").on("keyup", function () 
+                                {var value = $(this).val().toLowerCase();
+                                             $("#myTable tr ").filter(function () 
+                                                                    {$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)});
+                                })});
+                            </script>
+
+                    </div>          
+                </div>
+            </div>
+        </div>
+ <!-- ***************************************************************************************************************-->                
+ <br>
+    <div class="row clearfix">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-7">
+                                <h5 class="m-t-0">Homme</h5>
+                                <small class="text-small">{{Stats.male_users}} males have signed up</small>
+                            </div>
+                            <div class="col-5 text-right">
+                                <h2 class="m-b-0">{{Stats.male_percent}}%</h2>
+                                <small class="info">users</small>
+                            </div>
+                            <div class="col-12">
+                                <div class="progress m-t-20" value="20" type="success">
+                                <div class="progress-bar l-green" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: {{Stats.male_percent}}%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-7">
+                                <h5 class="m-t-0">Femme</h5>
+                                <small class="text-small">{{Stats.female_users}} females have signed up</small>
+                            </div>
+                            <div class="col-5 text-right">
+                                <h2 class="m-b-0">{{Stats.female_percent}}%</h2>
+                                <small class="info">users</small>
+                            </div>
+                            <div class="col-12">
+                                <div class="progress m-t-20" value="12">
+                                <div class="progress-bar l-blush" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100" style="width: {{Stats.female_percent}}%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-7">
+                                <h5 class="m-t-0">Freelancer</h5>
+                                <small class="text-small">Total Registered </small>
+                            </div>
+                            <div class="col-5 text-right">
+                                <h2 class="m-b-0">{{Stats.freelancer_percent}}%</h2>
+                                <small class="info">of {{Stats.freelancer_users}}</small>
+                            </div>
+                            <div class="col-12">
+                                <div class="progress m-t-20" value="39">
+                                <div class="progress-bar l-parpl" role="progressbar" aria-valuenow="39" aria-valuemin="0" aria-valuemax="100" style="width: {{Stats.freelancer_percent}}%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-7">
+                                <h5 class="m-t-0">Clients</h5>
+                                <small class="text-small">Total registered </small>
+                            </div>
+                            <div class="col-5 text-right">
+                                <h2 class="m-b-0">{{Stats.client_percent}}%</h2>
+                                <small class="info">of {{Stats.client_users}}</small>
+                            </div>
+                            <div class="col-12">
+                                <div class="progress m-t-20" value="89" type="success">
+                                <div class="progress-bar l-blue" role="progressbar" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100" style="width: {{Stats.client_percent}}%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+<!-- ***************************************************************************************************************-->
+     <!-- Hover Rows -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Liste des utilisateurs</h2>
+                        
+                    </div>
+                    <div class="body table-responsive " id='myTable'>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#id</th>
+                                    <th>FIRST NAME</th>
+                                    <th>LAST NAME</th>
+                                    <th>LOGIN</th>
+
+                                    <th>EMAIL</th>
+                                    <th>PHONE</th>
+                                    <th>DATE</th>
+                                    <th>ADRESSE</th>
+                                    <th>SEXE</th>
+                                    <th>ROLE</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for l in dashboard_user %}
+                                <tr>
+                                    <th scope="row">{{l.idUser}}</th>
+                                    <td>{{l.nomUser}}</td>
+                                    <td>{{l.prenomUser}}</td>
+                                    <td>{{l.login}}</td>
+
+                                    <td>{{l.email}}</td>
+                                    <td>{{l.tel}}</td>
+                                    <td>{{l.dateNaisUser|date('d/m/Y')}}</td>
+                                    <td>{{l.adresse}}</td>
+                                    <td>{{l.sexe}}</td>
+                                    <td>{{ l.roles[0] }}</td>
+                                    <td><a href="{{path('DeleteUser',{'id':l.idUser} )}}"><i class="zmdi zmdi-delete"></i></a></td>
+                                </tr>
+                            {% endfor %} 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+     <!-- #END# Hover Rows --> 
+     
+    </div>
+</section>
+
+<!-- *************************************    -->
+{% endblock %}

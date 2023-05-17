@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <!---<title> Responsive Registration Form | CodingLab </title>-->
+    <link rel="stylesheet" href="style.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+body{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #eceff1;
+      
+}
+.container{
+  max-width: 700px;
+  width: 100%;
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+}
+.container .title{
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+}
+.container .title::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #71b7e6, #007ae1);
+}
+.content form .user-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+form .user-details .input-box{
+  margin-bottom: 15px;
+  width: calc(100% / 2 - 20px);
+}
+form .input-box span.details{
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.user-details .input-box input{
+  height: 45px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-left: 15px;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
+.user-details .input-box input:focus,
+.user-details .input-box input:valid{
+  border-color: #007ae1;
+}
+ form .gender-details .gender-title{
+  font-size: 20px;
+  font-weight: 500;
+ }
+ form .category{
+   display: flex;
+   width: 80%;
+   margin: 14px 0 ;
+   justify-content: space-between;
+ }
+ form .category label{
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+ }
+ form .category label .dot{
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background: #d9d9d9;
+  border: 5px solid transparent;
+  transition: all 0.3s ease;
+}
+ #dot-1:checked ~ .category label .one,
+ #dot-2:checked ~ .category label .two,
+ #dot-3:checked ~ .category label .three{
+   background: #007ae1;
+   border-color: #d9d9d9;
+ }
+ form input[type="radio"]{
+   display: none;
+ }
+  .button{
+   height: 45px;
+  padding:10px;
+  margin-bottom:20px;
+ }
+ .button .input{
+   height: 100%;
+   width: 100%;
+   border-radius: 5px;
+   border: none;
+   color: #fff;
+   font-size: 18px;
+   font-weight: 500;
+   letter-spacing: 1px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   background: linear-gradient(135deg, #71b7e6, #007ae1);
+ }
+  .button .input:hover{
+  /* transform: scale(0.99); */
+  background: linear-gradient(-135deg, #71b7e6, #007ae1);
+  }
+ @media(max-width: 584px){
+ .container{
+  max-width: 100%;
+}
+form .user-details .input-box{
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  form .category{
+    width: 100%;
+  }
+  .content form .user-details{
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+  .user-details::-webkit-scrollbar{
+    width: 5px;
+  }
+  }
+  @media(max-width: 459px){
+  .container .content .category{
+    flex-direction: column;
+  }
+}
+/************************************************/
+      .flash-message {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
+
+    .flash-message-success {
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+      color: #155724;
+    }
+
+    .flash-message-error {
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      color: #721c24;
+    }
+
+    .flash-message-info {
+      background-color: #d1ecf1;
+      border-color: #bee5eb;
+      color: #0c5460;
+    }
+
+    .flash-message-warning {
+      background-color: #fff3cd;
+      border-color: #ffeeba;
+      color: #856404;
+    }
+
+    </style>
+   </head>
+<body>
+    
+  <div class="container">
+  {% for flash in app.flashes('success') %}
+        <div class="flash-message flash-message-success" >{{ flash }}</div><br>
+    {% endfor %}
+    {% for flash in app.flashes('error') %}
+        <div class="flash-message flash-message-error">{{ flash }}</div><br>
+    {% endfor %}
+
+    <div class="title">Registration</div>
+    <div class="content">
+      {{form_start(form2,{'attr': {'novalidate':'novalidate'}})}}
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details"> First Name</span>
+            {{ form_widget(form2.nomUser) }}
+            <b style="color:red; font-size:15px; text-align: center;">{{ form_errors(form2.nomUser) }}</b>
+          </div>
+          <div class="input-box">
+            <span class="details"> Last Name</span>
+            {{ form_widget(form2.prenomUser) }}
+            <b style="color:red; font-size:15px; text-align: center;">{{ form_errors(form2.prenomUser) }}</b>
+          </div>
+
+          <div class="input-box">
+            <span class="details">Username</span>
+            {{ form_widget(form2.login) }}
+            <b style="color:red; font-size:15px; text-align: center;">{{ form_errors(form2.login) }}</b>
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            {{ form_widget(form2.email) }}
+            <b style="color:red; font-size:15px; text-align: center;">{{ form_errors(form2.email) }}</b>
+          </div>
+
+          <div class="input-box">
+            <span class="details">Phone Number</span>
+            {{ form_widget(form2.tel, { 'label': 'Ex: 00-000-000' }) }}
+            <b style="color:red; font-size:15px; text-align: center;">{{ form_errors(form2.tel) }}</b>
+          </div>
+          <div class="input-box">
+            <span class="details">Password</span>
+           {{ form_widget(form2.password) }}
+           <b style="color:red; font-size:15px; text-align: center;">{{ form_errors(form2.password) }}</b>
+          </div>
+          <div class="input-box">
+            <span class="details"> Adresse</span>
+            {{ form_widget(form2.adresse) }}
+            <b style="color:red; font-size:15px; text-align: center;">{{ form_errors(form2.adresse) }}</b>
+          </div>
+          <div class="input-box">
+            <span class="details"> Date</span>
+            {{ form_widget(form2.dateNaisUser) }}
+            <b style="color:red; font-size:15px; text-align: center;">{{ form_errors(form2.dateNaisUser) }}</b>
+          </div>
+            <div class="input-box">
+               {{ form_row(form2.sexe, { 'label': 'Sexe : ' }) }}
+            </div>
+            <div class="input-box">
+                {{ form_row(form2.role,{ 'label': 'Connecter en tant que  : ' }) }}
+            </div>
+
+            <div class="input-box">
+                {{ form_widget(form2.captcha) }}<b style="color:red; font-size:15px; text-align: center;">{{ form_errors(form2.captcha) }}</b>
+            </div>
+        </div>
+
+        <div class="button">
+          {{ form_row(form2.SignUp) }}
+        </div>
+            
+        <p>Already a member? <a href="{{ path('app_login') }}">Log in</a></p>
+      {{form_end(form2)}}
+    </div>
+  </div>
+
+</body>
+</html>

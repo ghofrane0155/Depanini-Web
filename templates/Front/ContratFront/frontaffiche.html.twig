@@ -1,0 +1,47 @@
+{% extends 'Front/base.html.twig' %}
+
+{% block title %}Signez vos contrats{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold text-primary text-uppercase">Bienvenue</h5>
+                <h1 class="mb-0">Vos contrats </h1>
+            </div>
+            <div class="row g-5">
+                {% for rec in contrat %}
+                 {# {% if app.user.idUser()== rec.reference.idClient.idUser %} #}
+                    <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                        <div class="blog-item bg-light rounded overflow-hidden">
+                            <div class="blog-img position-relative overflow-hidden">
+                                <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">{{ rec.idContart }}</a>
+                            </div>
+                            <div class="p-4">
+                                <div class="d-flex mb-3">
+                                    <small class="me-3"><i class="far fa-user text-primary me-2"></i>{{ rec.reference }}</small>
+                                    <small><i class="far fa-text-alt text-primary me-2"></i>{{ rec.Etat }}</small>
+                                </div>
+                                <h4 class="mb-3">{{ rec.date|date('Y-m-d') }}</h4>
+                                <p>{{ rec.conditions}}</p>
+                                
+                               
+                                    <a class="btn btn-primary" href="{{ path('supp_contrat', {'id': rec.idContart}) }}">Supprimer</a>
+                                    <a class="btn btn-danger" href="{{ path('modifier_contrat', {'id': rec.idContart}) }}">Modifier</a>
+                                    <a class="btn btn-danger" href="{{ path('contrat_pdf', {'id': rec.idContart}) }}">Imprimer</a>
+                                    
+                               
+                                    
+                        </div>
+                    </div>
+                    </div>
+                    {# {% endif %} #}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

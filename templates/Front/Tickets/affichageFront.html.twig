@@ -1,0 +1,291 @@
+{% extends "Front/base.html.twig" %}  
+{% block css %}
+            <link rel="stylesheet" href="{{asset('Front/css/bootstrap.min.css')}}"/>
+			<link rel="stylesheet" href="{{asset('Front/css/styleFront.css')}}"/>
+			<link rel="stylesheet" href="{{asset('Front/lib/owlcarousel/assets/owl.carousel.min.css')}}"/>
+			<link rel="stylesheet" href="{{asset('Front/lib/animate/animate.min.css')}}"/>
+
+            
+<!--  *******************nour Css ****************-->
+    
+    <!-- Vendor CSS-->
+    <link href="{{asset('nourEvent/vendor/select2/select2.min.css')}}" rel="stylesheet" media="all">
+    
+    <!-- Main CSS-->
+    <link href="{{asset('nourEvent/css/main.css')}}" rel="stylesheet" media="all">
+<!--  *******************END nour Css ****************-->
+<style>
+      body {
+        background-color: #f8f8f8;
+        font-family: sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      .ticket {
+        background-color: #fff;
+        margin: 20px auto;
+        max-width: 600px;
+        padding: 20px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        display: flex;
+      }
+      .qr-code {
+        margin-top:70px;
+        width: 100px;
+        margin-right: 20px;
+      }
+      .ticket-info {
+        flex: 1;
+      }
+      .ticket-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .ticket-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #f39c12;
+        margin: 0;
+        margin-left: 10px;
+      }
+      .ticket-subtitle {
+        font-size: 16px;
+        color: #333;
+        margin: 0;
+        margin-left: 10px;
+      }
+      .ticket-separator {
+        height: 1px;
+        background-color: #f39c12;
+        margin: 20px 0;
+      }
+      .ticket-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .ticket-details-label {
+        color: #999;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+      .ticket-details-value {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+      }
+      .ticket-footer {
+        text-align: center;
+      }
+      .ticket-footer-text {
+        color: #999;
+        font-size: 12px;
+        margin: 10px 0;
+      }
+      .ticket-footer-logo {
+        width: 100px;
+      }
+    </style>
+{% endblock %}
+
+{% block Navbar %}
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+            <a href="{{ path('app_index') }}" class="navbar-brand p-0">
+                <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>Depanini</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+						<a href="{{ path('app_index') }}" class="nav-item nav-link ">Home</a>
+						<a href="about.html" class="nav-item nav-link">About</a>
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <div class="nav-item dropdown">
+					    	<a href="{{path('ReadAllEvents')}}" class="nav-item nav-link active" data-bs-toggle="dropdown">Events</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{{path('ReadAllEvents')}}" class="dropdown-item">Available Events</a>
+                                <a href="ticketOfThisUser" class="dropdown-item">My Tickets</a>
+                            </div> 
+                            </div>
+                        {% endif %}
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Products</a>
+							<div class="dropdown-menu m-0">
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+								<a href="addProduit" class="dropdown-item">Add Product</a>
+                            {% endif %}
+								<a href="showProduit" class="dropdown-item">See Products</a>
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+                                <a href="mesProduits" class="dropdown-item">See My Products</a>
+                                <a href="mesCommandes" class="dropdown-item">Cart </a>
+                            {% endif %}
+
+                            </div>
+						</div>
+
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Contact</a>
+							<div class="dropdown-menu m-0">
+								<a href="{{path('addReclamation')}}" class="dropdown-item">Reclamtion</a>
+                            </div>
+						</div>
+                        {% if app.user.roles()== ["ROLE_FREELANCER","ROLE_USER"] %}
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Offres</a>
+                                    <div class="dropdown-menu m-0">
+                                    
+                                        <a href="{{path('ajout_offre')}}" class="dropdown-item">Add Offre</a>
+                                        <a href="{{path('afficher_frontoffre')}}" class="dropdown-item">See Offre</a>
+
+                                    </div>
+                                </div>                            
+                        {% endif %}
+
+                        {% if app.user.roles()== ["ROLE_CLIENT","ROLE_USER"] %}
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown">Entreprises</a>
+                                    <div class="dropdown-menu m-0">
+                                    
+                                        <a href="" class="dropdown-item">Add Entreprise</a>
+                                        <a href="" class="dropdown-item">See Entreprise</a>
+
+                                    </div>
+                                </div>                            
+                        {% endif %}
+                    {% endif %}
+
+                        
+					</div>
+                    <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal">
+						<i class="fa fa-search"></i>
+					</button>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+                        {% if is_granted('ROLE_USER') %}
+                            {% if is_granted('ROLE_ADMIN') %}          
+                             <a class="nav-item nav-link" href="{{ path('dashboard_home') }}"><i class="fa fa-chart-line"></i></a>                               
+                            {% endif %}
+
+                            <div class="dropdown">
+                                <button class="dropdown-toggle btn" type="button" id="user-dropdown" data-bs-toggle="dropdown" aria-expanded="false" >
+                                    <img
+                                        src="https://ui-avatars.com/api/?name={{ app.user.nomUser|url_encode }}&size=32&background=random"
+                                        alt="{{ app.user.nomUser }} Avatar">
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-dropdown">
+                                    <li>
+                                        <a class="nav-item nav-link " href="{{ path('Profil') }}">Profil</a>   
+                                        <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                        
+                    {% else %}
+                        <a class=" btn btn-primary py-2 px-4 ms-3" href="{{ path('app_login') }}">Log In</a>
+                        <a href="{{ path('app_signup') }}" class=" btn btn-primary py-2 px-4 ms-3">Sign up</a>
+                    {% endif %}
+            </div>
+        </nav>
+
+        {% block b2 %}
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+            <div class="row py-5">
+                <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-4 text-white animated zoomIn">My Tickets</h1>
+                    <a href="" class="h5 text-white">Home</a>
+                    <i class="far fa-circle text-white px-2"></i>
+                    <a href="" class="h5 text-white">About</a>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+    </div>
+    <!-- Navbar End -->
+    {% endblock %}
+
+{% block body %}
+{% for flash in app.flashes('success') %}
+        <div class="flash-message flash-message-success">{{ flash }}</div><br>
+    {% endfor %}
+
+        {# ---------------------------------------------------------------- #}
+        
+
+    <div class="container "  >
+        <div class="row g-5" >            
+            <div class="heading_s1 text-center">
+            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                <h2 class="fw-bold text-primary text-uppercase">Your Tickets </h2>
+                <h1 class="mb-0"> Thank you for participating !  </h1>
+            </div>
+                    
+            </div>
+            <div class="row clearfix">
+                <div class="row clearfix">
+                
+  {% for tickets in tickets %}
+  {% if app.user.idUser()== tickets.iduser.idUser %}
+    <div class="ticket">
+      <div class="qr-code">
+        <img src="{{asset('/Ticket-' ~ tickets.idticket ~ '.png')}}"style="width" alt="QR Code">
+      </div>
+      <div class="ticket-info">
+        <div class="ticket-header">
+          <div class="ticket-title">Event Name
+          </div>
+          <div class="ticket-subtitle">{{ tickets.idEvent.nomevent }}
+          </div>
+          <div class="ticket-subtitle" style="margin-right:0px"><a href="{{path('DeleteTicket2',{'id':tickets.idticket}  )}}"><i class="zmdi zmdi-delete"></i>delete</a>
+          </div>
+        </div>
+        <div class="ticket-separator">
+        </div>
+        <div class="ticket-details">
+          <div class="ticket-details-label">Location:
+          </div>
+          <div class="ticket-details-value">{{ tickets.idEvent.lieuevent }}
+          </div>
+        </div>
+         <div class="ticket-details">
+          <div class="ticket-details-label">E-mail :
+          </div>
+          <div class="ticket-details-value">{{ tickets.iduser }}
+          </div>
+        </div>
+        <div class="ticket-details">
+          <div class="ticket-details-label">Date:
+          </div>
+          <div class="ticket-details-value">{{ tickets.idEvent.datedebutevent.format('Y-m-d H:i:s') }}
+      </div>
+        </div>
+        <div class="ticket-details">
+          <div class="ticket-details-label">Quantity:
+          </div>
+          <div class="ticket-details-value">{{ tickets.quantite }}
+          </div>
+        </div>
+        <div class="ticket-details">
+          <div class="ticket-details-label">Total Price:</div>
+          <div class="ticket-details-value">{{ tickets.prixtotale }}
+          </div>
+        </div>
+        </div>
+         
+         
+    </div>
+    
+    </div>
+    {% endif %}{% endfor %}
+    {# {% endif %} #}
+            </div>
+        </div>    
+    <!-- END form create event -->
+
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'Front/offreFront/base.html.twig' %}
+
+{% block title %}Ajouter une offre
+{% endblock %}
+
+
+{% block body %}
+
+    <!-- Facts Start -->
+
+
+
+
+
+
+
+
+    <!-- Demande posting Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <div class="section-title position-relative pb-3 mb-5">
+                        <h5 class="fw-bold text-primary text-uppercase">Esapce des offres !</h5>
+                        <h1 class="mb-0">Nous sommes là pour vous aider, n'hésitez pas à poster votre l'offre que vous prposez </h1>
+                    </div>
+                    <div class="row gx-3">
+                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
+                            <h5 class="mb-4"><i class="fa fa-reply text-primary me-3"></i>Notre equipe vous répond en moins de 24H  </h5>
+                        </div>
+                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
+                            <h5 class="mb-4"><i class="fa fa-phone-alt text-primary me-3"></i>Joigniable H24</h5>
+                        </div>
+                    </div>
+                    <p class="mb-4">Depanini est un espace qui met en relation des freelancers avec des clients .</p>
+                    <div class="d-flex align-items-center mt-2 wow zoomIn" data-wow-delay="0.6s">
+                        <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                            <i class="fa fa-phone-alt text-white"></i>
+                        </div>
+                        <div class="ps-4">
+                            <h5 class="mb-2">Pour plus d'information applez nous </h5>
+                            <h4 class="text-primary mb-0">+012 345 6789</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                   
+                        <form>
+                            <div class="row g-3">
+
+
+
+
+
+
+
+
+
+
+
+                               
+                            </div>
+                        </form>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Quote End -->
+
+
+
+
+       
+
+
+    
+    <!-- Events Start -->
+
+    
+
+
+    <!-- Vendor Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5 mb-5">
+            <div class="bg-white">
+                <div class="owl-carousel vendor-carousel">
+                    <img src="{{asset('Front/images/imagesFront/vendor-1.jpg')}}" alt="">
+                    <img src="{{asset('Front/images/imagesFront/vendor-2.jpg')}}" alt="">
+                    <img src="{{asset('Front/images/imagesFront/vendor-3.jpg')}}" alt="">
+                    <img src="{{asset('Front/images/imagesFront/vendor-4.jpg')}}" alt="">
+                    <img src="{{asset('Front/images/imagesFront/vendor-5.jpg')}}" alt="">
+                    <img src="{{asset('Front/images/imagesFront/vendor-6.jpg')}}" alt="">
+                    <img src="{{asset('Front/images/imagesFront/vendor-7.jpg')}}" alt="">
+                    <img src="{{asset('Front/images/imagesFront/vendor-8.jpg')}}" alt="">
+                    <img src="{{asset('Front/images/imagesFront/vendor-9.jpg')}}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Vendor End -->
+
+
+
+        {% block js %}
+            <!-- JavaScript Libraries -->
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="{{asset('Front/lib/wow/wow.min.js')}}"></script>
+            <script src="{{asset('Front/lib/easing/easing.min.js')}}"></script>
+            <script src="{{asset('Front/lib/waypoints/waypoints.min.js')}}"></script>
+            <script src="{{asset('Front/lib/counterup/counterup.min.js')}}"></script>
+            <script src="{{asset('Front/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+
+            <script src="{{asset('Front/js/recrutement.js')}}"></script>
+
+            <!-- Template Javascript -->
+            <script src="{{asset('Front/js/main.js')}}"></script>
+        {% endblock %}
+        {% endblock %}
+   

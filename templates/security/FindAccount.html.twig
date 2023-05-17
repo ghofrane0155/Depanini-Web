@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Find Your Account</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+      background-color: #eceff1;
+		}
+		nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background-color: #fff;
+			color: #007ae1;
+			padding: 10px 20px;
+		}
+		nav h1 {
+			margin: 0;
+			font-size: 30px;
+			font-weight: normal;
+      font-weight: bold;
+
+		}
+		nav form {
+			display: flex;
+			align-items: center;
+		}
+		nav form input[type="text"],
+		nav form input[type="password"] {
+			padding: 10px;
+			margin-right: 5px;
+			border-radius: 5px;
+			/* border: none; */
+			font-size: 16px;
+			width: 100%;
+		}
+		nav form input[type="submit"] {
+			background-color: #007ae1;
+			color: #fff;
+			padding:10px;
+			border-radius: 5px;
+			border: none;
+			font-size: 16px;
+			cursor: pointer;
+      width: 60%;
+      font-weight: bold;
+		}
+    nav form input[type="submit"]:hover {
+        background-color: #1569c7;
+      }
+
+		.centered-form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 50px;
+		}
+		.centered-form input[type="text"] {
+			padding: 10px;
+			font-size: 16px;
+			border-radius: 5px;
+			border: none;
+			width: 300px;
+		}
+		.centered-form input[type="submit"] {
+			background-color: #1877f2;
+			color: #fff;
+			padding: 10px 20px;
+			border-radius: 5px;
+			border: none;
+			font-size: 16px;
+			cursor: pointer;
+			margin-top: 10px;
+		}
+    /************************************************/
+      .flash-message {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
+
+    .flash-message-success {
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+      color: #155724;
+    }
+
+    .flash-message-error {
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      color: #721c24;
+    }
+
+    .flash-message-info {
+      background-color: #d1ecf1;
+      border-color: #bee5eb;
+      color: #0c5460;
+    }
+
+    .flash-message-warning {
+      background-color: #fff3cd;
+      border-color: #ffeeba;
+      color: #856404;
+    }
+  {% block css %}
+    button[type="submit"] {
+        padding: 10px;
+        border-radius: 3px;
+        border: none;
+        background-color: #1877f2;
+        color: #ffffff;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #1569c7;
+      }
+
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        padding: 10px;
+        border-radius: 3px;
+        border: 1px solid #cfcfcf;
+        background-color: #f0f2f5;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+        color: #222222;
+      }
+
+    .container {
+        background-color: #ffffff;
+        width: 800px;
+        margin: 150px auto;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        display: flex;      
+      }
+
+      .form-wrapper {
+        padding: 20px;
+        width: 50%;
+      }
+
+      .form-wrapper h1 {
+        font-size: 28px;
+        font-weight: normal;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+    .back-to-login {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .back-to-login a {
+        color: #1877f2;
+        text-decoration: none;
+      }
+
+      .back-to-login a:hover {
+        text-decoration: underline;
+      }
+
+      .text-wrapper {
+        background-color: #4267b2;
+        color: #ffffff;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .text-wrapper h1 {
+        font-size: 48px;
+        font-weight: normal;
+        margin: 0;
+        text-align: center;
+      }
+
+      .text-wrapper p {
+        font-size: 18px;
+        margin: 20px 0;
+        text-align: center;
+      }
+     {% endblock %}
+     </style>
+
+</head>
+<body>
+	<nav>
+		<h1><a  style="text-decoration: none; color:#007ae1; " href="{{ path('app_login') }}">Depanini</a></h1>
+		<form>
+			<input type="text" placeholder="Username">
+			<input type="password" placeholder="Password">
+			<input type="submit" value="Login">
+		</form>
+	</nav>
+	
+{% block body %}
+  <div class="container">
+    <div class="form-wrapper">
+     
+        <section class="section register ">
+            {% for danger  in app.flashes('danger') %}
+                <div class="flash-message flash-message-error "  style="font-size: 16px;">
+                    {{ danger }}
+                </div>
+            {% endfor %}
+        </section>
+
+      <h1>Find Your Account</h1>
+      {# <form>
+        <div class="form-group">
+          <label for="email">Email or phone</label>
+          <input type="text" id="email" required>
+        </div>
+        <button type="submit">Search</button>
+        <div class="back-to-login">
+          <a href="{{ path('app_login') }}">Back to login</a>
+        </div>
+      </form> #}
+
+    {# {{ form_start(form, {'action': path('Password_send_sms'), 'attr': {'novalidate':'novalidate'}}) }}
+    {{ form_widget(form) }}
+   <button type="submit" class="btn btn-save">{{ button_label|default('Send Code') }}</button>
+   {{ form_end(form) }} #}
+
+   {{ form_start(form,{'attr': {'novalidate':'novalidate'}}) }}
+
+    <div class="form-group">
+        <label for="yourEmail" class="form-label">Your Email</label>
+             {{ form_widget(form.email,{'attr':{'class':'form-control','placeholder':"exemple@gmail.com"}}) }}
+                {# <div class="invalid-feedback">Please enter a valid Email adddress!</div> #}
+    </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary w-100" type="submit">{{ button_label|default('Next') }}</button>
+        </div>
+
+    {{ form_end(form) }}
+
+    </div>
+    <div class="text-wrapper">
+      <h1>Depanini</h1>
+      <p>Find your account to continue</p>
+    </div>
+  </div>
+{% endblock  %}
+
+
+
+</body>
+</html>

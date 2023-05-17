@@ -1,0 +1,110 @@
+
+{% extends 'Back/base.html.twig' %}
+        {% block Dashboard %} class="sm_menu_btm" {% endblock %}
+        {% block Confidentialite%} class="sm_menu_btm" {% endblock %}
+        {% block Profile%} class="sm_menu_btm" {% endblock %}
+        {% block Users%} class="sm_menu_btm" {% endblock %}
+        {% block Events%} class="active open" {% endblock %}
+        {% block Reclamation%} class="sm_menu_btm" {% endblock %}    
+        {% block Achats%} class="sm_menu_btm" {% endblock %}
+
+{% block css %}
+        <link rel="stylesheet" href="{{ asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css') }}">
+
+        <link rel="stylesheet" href="{{asset('Back/plugins/bootstrap/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('Back/plugins/morrisjs/morris.css')}}" />
+        <link rel="stylesheet" href="{{asset('Back/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css')}}"/>
+        <!-- Custom Css -->
+        <link rel="stylesheet" href="{{asset('Back/css/main.css')}}">
+        <link rel="stylesheet" href="{{asset('Back/css/color_skins.css')}}">
+
+        <link rel="stylesheet" href="{{ asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css') }}">
+        <style>
+                #calendrier{
+                    width: 60%;
+                    margin: auto;
+                    
+                }
+        </style>
+        
+
+{% endblock %}
+
+
+{% block body %}
+<div id="calendrier">
+</div>
+
+{% endblock %}
+{% block js %}
+    <!-- Jquery Core Js -->
+    <script src="{{asset('Back/bundles/libscripts.bundle.js') }}" ></script>
+    <script src="{{asset('Back/bundles/vendorscripts.bundle.js')}}"></script>
+    <script src="{{asset('Back/bundles/mainscripts.bundle.js')}}"></script>
+    <script src="{{asset('Back/bundles/knob.bundle.js')}}"></script>
+    <script src="{{asset('Back/bundles/jvectormap.bundle.js')}}"></script> <!-- JVectorMap Plugin Js -->
+    <script src="{{asset('Back/bundles/morrisscripts.bundle.js')}}"></script> <!-- Morris Plugin Js -->
+    <script src="{{asset('Back/bundles/sparkline.bundle.js')}}"></script> <!-- sparkline Plugin Js -->
+    <script src="{{asset('Back/bundles/doughnut.bundle.js')}}"></script>
+    <script src="{{asset('Back/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+    <script src="{{asset('Back/bundles/mainscripts.bundle.js')}}"></script>
+    <script src="{{asset('Back/js/pages/index.js')}}"></script>
+    <script src="{{asset('Back/js/event.js')}}"></script>
+    <script src="{{asset('Back/js/pages/forms/basic-form-elements.js')}}"></script>
+    <script>
+        window.onload = () => {
+        let calendarElt = document.querySelector("#calendrier")
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+            initialView: 'dayGridMonth',
+            locale: 'fr',
+            timeZone: 'Europe/Paris',
+            allDayDefault: true,
+            defaultAllDayEventDuration: { day: 1 },
+
+            headerToolbar: {
+                start: 'prev,next today',
+                center: 'title',
+                end: 'dayGridMonth,timeGridWeek'
+            },
+             events: {{ data|raw }},
+             editable: true,
+             eventResizableFromStart: true,
+             eventClick: function(info) {
+             alert("Event ID: " + info.event.id + "\nTitle: " + info.event.title +"\nOrganizer: " + info.event.extendedProps.organizer  +"\nPlace: " + info.event.extendedProps.place+"\nLimited Number: " + info.event.extendedProps.LimitedNumber +"\nEvent Price: " + info.event.extendedProps.EventPrice + "\nDescription: " + info.event.extendedProps.description);
+
+        // Change the background color of the alert to the color of the clicked event
+        let alertElt = document.querySelector('.fc-alert');
+        if (alertElt) {
+          alertElt.style.backgroundColor = info.event.backgroundColor;
+        }
+      }
+        })
+
+         calendar.on('eventChange', (e) => {
+            let url = `/api/${e.event.id}/edit`
+             console.log(e.event.id);
+            let donnees = {
+                'title': e.event.title,
+                'description': e.event.extendedProps.description,
+                'start': e.event.start,
+                'end': e.event.end,
+                'place': e.event.extendedProps.place,
+                'organiser':e.event.extendedProps.organiser,
+                'EventPrice': e.event.extendedProps.EventPrice,
+                'LimitedNumber': e.event.extendedProps.LimitedNumber,
+                'Image': e.event.extendedProps.Image,
+            }
+            console.log(donnees);
+            let xhr = new XMLHttpRequest;
+            console.log(xhr);
+            
+            xhr.open("PUT", url)
+            xhr.send(JSON.stringify(donnees))
+            
+
+        })
+
+        calendar.render()
+    }
+</script>
+{% endblock %}

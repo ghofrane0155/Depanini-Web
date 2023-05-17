@@ -1,0 +1,17 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+ #contrat_search:
+  # path: /search
+  # controller: App\Controller\RecrutementsController::search
+  # methods: [GET, POST]
+Password_send_sms:
+    path: /send-sms
+    controller: App\Controller\smsController::sendSms
+# config/routes.yaml
+
+app_tickets:
+    path: /tickets
+    controller: App\Controller\TicketsController::index2
+    methods: GET

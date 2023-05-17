@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Event Ticket</title>
+    <style>
+      body {
+        background-color: #f8f8f8;
+        font-family: sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      .ticket {
+        background-color: #fff;
+        margin: 20px auto;
+        max-width: 600px;
+        padding: 20px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        display: flex;
+      }
+      .qr-code {
+        margin-top:70px;
+        width: 100px;
+        margin-right: 20px;
+      }
+      .ticket-info {
+        flex: 1;
+      }
+      .ticket-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .ticket-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #f39c12;
+        margin: 0;
+        margin-left: 10px;
+      }
+      .ticket-subtitle {
+        font-size: 16px;
+        color: #333;
+        margin: 0;
+        margin-left: 10px;
+      }
+      .ticket-separator {
+        height: 1px;
+        background-color: #f39c12;
+        margin: 20px 0;
+      }
+      .ticket-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .ticket-details-label {
+        color: #999;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+      .ticket-details-value {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+      }
+      .ticket-footer {
+        text-align: center;
+      }
+      .ticket-footer-text {
+        color: #999;
+        font-size: 12px;
+        margin: 10px 0;
+      }
+      .ticket-footer-logo {
+        width: 100px;
+      }
+    </style>
+  </head>
+  {% block body %}
+  <div class="row clearfix">
+  {% for tickets in tickets %}
+    <div class="ticket">
+      <div class="qr-code">
+        <img src="{{asset('/Ticket-' ~ tickets.idticket ~ '.png')}}"style="width" alt="QR Code">
+      </div>
+      <div class="ticket-info">
+        <div class="ticket-header">
+          <div class="ticket-title">Event Name
+          </div>
+          <div class="ticket-subtitle">{{ tickets.idEvent.nomevent }}
+          </div>
+        </div>
+        <div class="ticket-separator">
+        </div>
+        <div class="ticket-details">
+          <div class="ticket-details-label">Location:
+          </div>
+          <div class="ticket-details-value">{{ tickets.idEvent.lieuevent }}
+          </div>
+        </div>
+         <div class="ticket-details">
+          <div class="ticket-details-label">E-mail :
+          </div>
+          <div class="ticket-details-value">{{ tickets.iduser }}
+          </div>
+        </div>
+        <div class="ticket-details">
+          <div class="ticket-details-label">Date:
+          </div>
+          <div class="ticket-details-value">{{ tickets.idEvent.datedebutevent.format('Y-m-d H:i:s') }}
+      </div>
+        </div>
+        <div class="ticket-details">
+          <div class="ticket-details-label">Quantity:
+          </div>
+          <div class="ticket-details-value">{{ tickets.quantite }}
+          </div>
+        </div>
+        <div class="ticket-details">
+          <div class="ticket-details-label">Total Price:</div>
+          <div class="ticket-details-value">{{ tickets.prixtotale }}
+          </div>
+        </div>
+        </div>
+         
+         
+    </div>
+    
+    </div>
+    {% endfor %}s
+  {% endblock %} 
+

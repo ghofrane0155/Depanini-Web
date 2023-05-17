@@ -1,0 +1,89 @@
+<style>
+  .container {
+    margin-top: 50px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+  }
+
+  .card-title {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 50px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+  }
+
+  th {
+    font-weight: bold;
+    background-color: #63c5da;
+    padding: 10px;
+    text-align: left;
+  }
+
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #63c5da;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .btn-primary {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+
+  .btn-primary:hover {
+    background-color: #3e8e41;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card-body">
+<h5 class="card-title" style="color: #0492c2;">Contrat de travail</h5>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th>Nom de l'entreprise</th>
+              <td>{{ contrat.reference.nom }}</td>
+            </tr>
+            <tr>
+              <th>Etat du contrat</th>
+              <td>{{ contrat.Etat }}</td>
+            </tr>
+              <tr>
+              <th>Date</th>
+              <td>{{ contrat.date|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+              <th>Les termes et conditions</th>
+              <td>{{ contrat.conditions }}</td>
+            </tr>
+             <tr>
+              <th>Les termes et conditions</th>
+              <td>{{ contrat.idContart }}</td>
+            </tr>
+            
+          
+          </tbody>
+        </table>
+<h5 class="card-title" style="color: #0492c2; font-size: 90%;">** VEUILLEZ APPORTER CE CONTRAT AVEC VOUS LORS DE L'ENTRETIEN TECHNIQUE **</h5>
+      </div>
+    </div>
+  </div>
+</div>

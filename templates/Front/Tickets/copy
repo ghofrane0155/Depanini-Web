@@ -1,0 +1,97 @@
+{% extends "Front/visiteurpages/base.html.twig" %}
+{% block css %}
+            <link rel="stylesheet" href="{{asset('Front/css/bootstrap.min.css')}}"/>
+			<link rel="stylesheet" href="{{asset('Front/css/styleFront.css')}}"/>
+			<link rel="stylesheet" href="{{asset('Front/lib/owlcarousel/assets/owl.carousel.min.css')}}"/>
+			<link rel="stylesheet" href="{{asset('Front/lib/animate/animate.min.css')}}"/>
+<!-- Custom Css -->
+    
+            
+<!--  *******************nour Css ****************-->
+    <!-- Icons font CSS-->
+    <link href="{{asset('nourEvent/vendor/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{asset('nourEvent/vendor/font-awesome-4.7/css/font-awesome.min.css')}}" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="{{asset('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i')}}" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="{{asset('nourEvent/vendor/select2/select2.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{asset('nourEvent/vendor/datepicker/daterangepicker.css')}}" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="{{asset('nourEvent/css/main.css')}}" rel="stylesheet" media="all">
+    <style>
+    .intro {
+  height: 100%;
+}
+
+@media (min-height: 300px) and (max-height: 450px) {
+  .intro {
+    height: auto;
+  }
+}
+
+.gradient-custom {
+  background: radial-gradient(50% 123.47% at 50% 50%, #00FF94 0%, #720059 100%), linear-gradient(121.28deg, #669600 0%, #FF0000 100%), linear-gradient(360deg, #0029FF 0%, #8FFF00 100%), radial-gradient(100% 164.72% at 100% 100%, #6100FF 0%, #00FF57 100%), radial-gradient(100% 148.07% at 0% 0%, #FFF500 0%, #51D500 100%);
+  background-blend-mode: screen, color-dodge, overlay, difference, normal;
+}
+    </style>
+<!--  *******************END nour Css ****************-->
+{% endblock %}
+{% block body %}
+{% for flash in app.flashes('error') %}
+        <div class="flash-message flash-message-error">{{ flash }}</div><br>
+    {% endfor %}
+
+{# **************************** #}
+<section class="intro">
+  <div class="mask d-flex align-items-center h-100" style="background-color: #D6D6D6;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+
+              <div class="my-md-5 pb-5">
+
+                <h1 class="fw-bold mb-0">Thank you for participating to      {{ event.nomEvent }} !! </h1>
+                <div class="blog-img position-relative overflow-hidden">
+                            <img class="img-fluid" src="{{event.imageevent}}" alt="">
+                            <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">{{event.nomevent}}</a>
+                        </div>
+                <i class="fas fa-heart fa-3x my-5"></i>
+                <p class="card-text">Price : {{ event.prixevent }} DT</p>
+        <p class="card-text">Event Date: {{ event.datedebutevent|date('Y-m-d') }}</p>
+        <p class="text-danger">{{ remainingDaysString }}  !!</p>
+        {% if remainingTicketsCount > 0 %}
+            <p>{{ remainingTicketsCount }} tickets remaining</p>
+        {% else %}
+            <p>Sorry, no more tickets available for this event.</p>
+        {% endif %}
+        {{form_start(form,{'attr': {'novalidate':'novalidate'}})}}
+                <div class="form-outline mb-4" style="margin-top: 20px;">
+                  {{ form_widget(form.quantite) }} {{ form_errors(form.quantite) }}
+                </div>
+
+                <div class="form-outline mb-5">
+                  {{ form_widget(form.idUser) }}
+                </div>
+
+                <button class="btn btn-primary float-right" onclick="window.location.href='{{path('addTicket',{'id':event.idevent})}}'">Add to Basket <i class="bi bi-arrow-right"></i></button>
+
+              </div>
+
+              <div>
+                <p class="mb-0"> <a href="#!" class="text-body fw-bold"> <- Go Back </a></p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'Front/base.html.twig' %}
+
+{% block title %}Ajouter une offre
+{% endblock %}
+
+
+{% block body %}
+
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+
+ 
+
+
+<div style="display: flex; justify-content: center;">
+   {{form_start(form,{'attr' :{'novalidate':'novalidate'}})}}
+   {{ form_end(form) }}
+   </div>
+
+        {% endblock %}
+
+

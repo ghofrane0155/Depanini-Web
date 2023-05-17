@@ -1,0 +1,292 @@
+{% extends 'Back/base.html.twig' %}
+        {% block Dashboard %} class="sm_menu_btm" {% endblock %}
+        {% block Profile %} class="sm_menu_btm" {% endblock %}
+        {% block Users%} class="sm_menu_btm" {% endblock %}
+        {% block Events%} class="sm_menu_btm" {% endblock %}
+        {% block Recrutements%} class="sm_menu_btm" {% endblock %}
+        {% block Contrats%} class="active open" {% endblock %}
+        {% block Reclamation%} class="sm_menu_btm" {% endblock %}
+        {% block Tickets%} class="sm_menu_btm" {% endblock %}
+        {% block feedback%} class="sm_menu_btm" {% endblock %}
+        {% block Offres%} class="sm_menu_btm" {% endblock %}
+        {% block Categories%} class="sm_menu_btm" {% endblock %}
+        {% block Produits%} class="sm_menu_btm" {% endblock %}
+
+
+{% block title %}Les contrats{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{asset('Back/plugins/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('Back/plugins/morrisjs/morris.css')}}" />
+    <link rel="stylesheet" href="{{asset('Back/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css')}}"/>
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{{asset('Back/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('Back/css/color_skins.css')}}">
+    <link rel="stylesheet" href="{{asset('Back/plugins/sweetalert/sweetalert.css')}}"/>
+{% endblock %}
+
+{% block body %}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Liste des contrats de travail envoyés</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="{{asset('dashboardhome')}}"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item active">Contrat</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-12">
+                        <div class="input-group m-b-0">
+                            <input id='searchInput' type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-addon">
+                            <i class="zmdi zmdi-search"></i>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="body" style="align-items: center">
+
+                            <div style="display: flex;justify-content: space-around;">
+                                <span style="margin-top: 10px" >Filtre Avec Etat</span>
+                                <button type="button" class="btn btn-round btn-simple btn-sm btn-warning btn-filter" data-target="suspended">Confirmé</button>
+                                <button type="button" class="btn btn-round btn-simple btn-sm btn-info btn-filter" data-target="pending">En attente</button>
+                            </div>
+
+                        </div>
+                        <div class="header">
+                            <h2><strong>List</strong> Contrats</h2>
+                
+                                <table class="table table-filter table-hover m-b-0">
+                                    <thead>
+                                    <tr>
+                                        <th>ID Contrat</th>
+                                      
+                                        <th>Poste de travail</th>
+                                        <th>Les termes et conditions</th>
+                                        <th style="display: flex;justify-content: center">Etat du contrat</th>
+                                        <th>Date</th>
+                                        <th style="display: flex;justify-content: center">Action</th>
+                                    </tr>
+                                    </thead>
+                                    {% for rec in contrat %}
+                                    <tbody>
+
+                                        <tr data-status="{% if rec.Etat == "en_attente" %}pending{% elseif rec.Etat == 'confirme' %}suspended{% endif %}">
+                                            <td>{{ loop.index }}</td>
+                                           
+                                            <td>{{rec.reference}}</td>
+                                            <td>{{rec.conditions}}</td>
+                                            <td style="display: flex;justify-content: center"><span class="{% if rec.Etat == "en_attente" %}badge badge-info {% elseif rec.Etat == 'confirme' %}badge badge-warning{% endif %}">{{rec.Etat}}</span></td>
+                                            <td>{{rec.date|date('d-m-Y')}}</td>
+                                            <td style="display: flex;justify-content: space-around">
+                                                <div class="js-sweetalert">
+
+
+                                                <a class="btn btn-danger" href="{{ path('supprimer_contrat', {'id': rec.idContart}) }}">Supprimer</a>
+
+
+                                                 <a href="#"> </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        <canvas id="myChart" style="width:50%;max-width:900px;margin-left:300px;"></canvas>
+
+{% endblock %}
+
+{% block js %}
+    <!-- Jquery Core Js -->
+    <script src="{{asset('Back/bundles/libscripts.bundle.js')}}"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+    <script src="{{asset('Back/bundles/vendorscripts.bundle.js')}}"></script> <!-- slimscroll, waves Scripts Plugin Js -->
+
+    <script src="{{asset('Back/bundles/knob.bundle.js')}}"></script> <!-- Jquery Knob-->
+    <script src="{{asset('Back/bundles/jvectormap.bundle.js')}}"></script> <!-- JVectorMap Plugin Js -->
+    <script src="{{asset('Back/bundles/morrisscripts.bundle.js')}}"></script> <!-- Morris Plugin Js -->
+    <script src="{{asset('Back/bundles/sparkline.bundle.js')}}"></script> <!-- sparkline Plugin Js -->
+    <script src="{{asset('Back/bundles/doughnut.bundle.js')}}"></script>
+
+    <script src="{{asset('Back/bundles/mainscripts.bundle.js')}}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.star').on('click', function () {
+                $(this).toggleClass('star-checked');
+            });
+
+            $('.ckbox label').on('click', function () {
+                $(this).parents('tr').toggleClass('selected');
+            });
+
+            $('.btn-filter').on('click', function () {
+                var $target = $(this).data('target');
+                if ($target != 'all') {
+                    $('.table tr').css('display', 'none');
+                    $('.table tr[data-status="' + $target + '"]').fadeIn('slow');
+                } else {
+                    $('.table tr').css('display', 'none').fadeIn('slow');
+                }
+            });
+        });
+    </script>
+    <script src="Back/plugins/sweetalert/sweetalert.min.js"></script> <!-- SweetAlert Plugin Js -->
+    <script >
+        $(function () {
+            $('.js-sweetalert button').on('click', function () {
+                if (type === 'cancel') {
+                    myfunction(id);
+                }
+            });
+        });
+
+
+        function myfunction(id) {
+            console.log(id);
+            console.log("Êtes-vous sûr ?");
+            swal({
+                title: "Êtes-vous vraiment sûr(e) ?",
+                text: "Vous ne pourrez pas récupérer ces donnes !",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Oui, supprimez-le !",
+                cancelButtonText: "Non, annulez s'il vous plaît !",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    console.log("Supprimé !");
+                    swal("Supprimé !", "Votre donnes a été supprimé.", "success");
+                    window.location.href = 'http://127.0.0.1:8000/deleteReclamation/'+id;
+                } else {
+                    console.log("Annulé !");
+                    swal("Annulé !", "Votre fichier imaginaire est en sécurité :)", "error");
+                }
+            });
+        }
+
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    let confirmedContractsCount = 0;
+    let waitingContractsCount = 0;
+
+    {% for c in contrat %}
+        {% if c.Etat == "confirme" %}
+            confirmedContractsCount++;
+        {% else %}
+            waitingContractsCount++;
+        {% endif %}
+    {% endfor %}
+
+    // Fonction pour générer des couleurs aléatoires
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 15)];
+        }
+        return color;
+    }
+
+    // Création des données pour le graphique
+    let chartData = {
+        labels: ["Confirmé", "En attente"],
+        datasets: [{
+            data: [confirmedContractsCount, waitingContractsCount],
+            backgroundColor: ["#36A2EB", "#FF6384"],
+            borderWidth: 1,
+            borderColor: '#ddd',
+            hoverBorderColor: 'black'
+        }]
+    };
+
+    // Configuration des options du graphique
+    let chartOptions = {
+        title: {
+            display: true,
+            text: "Statistiques des contrats envoyés",
+            fontSize: 18,
+            fontFamily: 'Arial',
+            fontColor: '#333'
+        },
+        legend: {
+            display: false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    fontColor: '#666',
+                    fontSize: 14,
+                    fontFamily: 'Arial'
+                },
+                gridLines: {
+                    color: "#eee",
+                    zeroLineColor: "#666",
+                    zeroLineWidth: 1,
+                    lineWidth: 1,
+                    borderDash: [2, 2]
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    fontColor: '#666',
+                    fontSize: 14,
+                    fontFamily: 'Arial'
+                },
+                gridLines: {
+                    color: "transparent"
+                }
+            }]
+        }
+    };
+
+    // Création du graphique
+    let ctx = document.getElementById('myChart').getContext('2d');
+    let myChart = new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: chartOptions
+    });
+</script>
+
+    <script>
+        function filterTable() {
+            const filter = document.getElementById('searchInput').value.toUpperCase();
+            const rows = document.querySelectorAll('table tr');
+            for (let i = 1; i < rows.length; i++) {
+                const cols = rows[i].querySelectorAll('td');
+                let visible = false;
+                for (let j = 0; j < cols.length; j++) {
+                    const cell = cols[j];
+                    if (cell.innerText.toUpperCase().indexOf(filter) > -1) {
+                        visible = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = visible ? '' : 'none';
+            }
+        }
+        document.getElementById('searchInput').addEventListener('keyup', filterTable);
+    </script>
+
+
+{% endblock %}

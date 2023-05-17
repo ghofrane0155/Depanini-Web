@@ -1,0 +1,285 @@
+{% extends 'Back/base.html.twig' %}
+{% block Dashboard %}
+	class="active open"
+{% endblock %}
+{% block Profile%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Users%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Events%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Reclamation%}
+	class="sm_menu_btm"
+{% endblock %}
+{% block Achats%}
+	class="sm_menu_btm"
+{% endblock %}
+
+{% block st %}
+	<style>
+		.zmdi-star {
+			color: #f3e171;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+	<section class="content">
+		<div class="container-fluid">
+			{# {{ dump(Feedbacks) }} #}
+			<div class="row clearfix">
+
+				<div class="col-lg-8 col-md-12">
+					<div class="card">
+						<div class="header">
+							<h2>
+								<strong>TOP 10 Utilisateurs</strong>
+
+								<ul class="header-dropdown">
+									<li class="dropdown">
+										<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+											<i class="zmdi zmdi-more"></i>
+										</a>
+										<ul class="dropdown-menu slideUp">
+											<li>
+												<a role="button" class="boxs-close">Delete</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</h2>
+						</div>
+						<div class="body m-b-10 bg-dark">
+							<div class="row">
+								<div class="col-6">
+									<small>Nombre Total des Etoile</small>
+									<h4 class="text-success m-b-0 m-t-0">{{allStars}}</h4>
+									<h6 class="m-b-0 m-t-0">Avril 2023</h6>
+								</div>
+
+							</div>
+						</div>
+						<div class="body">
+							<div class="table-responsive earning-report">
+								<table class="table m-b-0 table-hover">
+									<thead>
+										<tr>
+											<th colspan="2">Nom Utilisateurs</th>
+											<th>Rang</th>
+											<th style="text-align: center;">Nombre d'etoile</th>
+											<th style="text-align: center;">Action</th>
+
+										</tr>
+									</thead>
+									<tbody>
+
+										{% for feedback in Feedbacks %}
+											<tr>
+
+												<td style="width:60px;">
+													<span class="rounded">
+														{% if feedback.photoUser is null %}
+															<img style="border-radius: 50%!important;" src="back/images/imgUserProfile/userlogo.png" alt="user" width="50">
+														{% else %}
+															{# <img style="border-radius: 50%!important;" src="{{ asset('/Back/images/imgUserProfile/' ~ feedback.photoUser) }}" alt="user" width="50"> #}
+															<img style="border-radius: 50%!important;" src="{{ feedback.photoUser }}" alt="user" width="50">
+
+														{% endif %}
+													</span>
+												</td>
+												<td>
+													<h6>{{feedback.nomUser}}</h6>
+													<small class="text-muted">{{feedback.prenomUser}}</small>
+												</td>
+												<td>
+													{% set rankImage = '' %}
+													{% set rankBadge = '' %}
+
+													{% set color = '' %}
+
+													{% set rankStars = feedback.totalStars %}
+													{% if rankStars >= 1 and rankStars <= 20 %}
+														{% set rankImage = 'iron.png' %}
+														{% set rankBadge = 'Iron' %}
+														{% set color = '#525452' %}
+													{% elseif rankStars > 10 and rankStars <= 40 %}
+														{% set rankImage = 'bronze.png' %}
+														{% set rankBadge = 'Bronze' %}
+														{% set color = '#8c6f47' %}
+													{% elseif rankStars > 20 and rankStars <= 60 %}
+														{% set rankImage = 'silver.png' %}
+														{% set rankBadge = 'Silver' %}
+														{% set color = '#b5bdba' %}
+
+														{% set color = '' %}
+													{% elseif rankStars > 50 and rankStars <= 80 %}
+														{% set rankImage = 'gold.png' %}
+														{% set rankBadge = 'Gold' %}
+
+														{% set color = '#f3e171' %}
+													{% else %}
+														{% set rankImage = 'platinum.png' %}
+														{% set rankBadge = 'Platinum' %}
+														{% set color = '#3d8586' %}
+													{% endif %}
+													{% if rankImage %}
+														<span class="badge " style="border-color: {{ color }} ;color:{{ color }} !important;">{{ rankBadge }}</span>
+														<img src="{{ asset('/Back/images/rank/' ~ rankImage) }}" alt="{{ rankBadge }}" width="25">
+													{% endif %}
+												</td>
+
+
+												<td style="text-align: center;">
+													{{feedback.totalStars}}</td>
+												<td style="display: flex;justify-content: space-around">
+													<div class="js-sweetalert"></button>
+													<button onclick="window.location.href='{{path('user_details',{'iduser':feedback.idUser})}}';" style="border: none;background-color: #007bff00">
+														<i class="zmdi zmdi-info col-blue zmdi-hc-2x"></i>
+													</button>
+												</td>
+											</tr>
+										{% endfor %}
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-12">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="header">
+									<h2>
+										<strong>Systeme de rank</strong>
+
+										<ul class="header-dropdown">
+											<li class="dropdown">
+												<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+													<i class="zmdi zmdi-more"></i>
+												</a>
+												<ul class="dropdown-menu slideUp">
+													<li>
+														<a role="button" class="boxs-close">Delete</a>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</h2>
+								</div>
+
+								<div class="card" onmousemove="myFunction()" onmouseout="clearCoor()">
+									<div class="body text-center">
+										<div class="knob-wrapper" style="display: flex;
+																																																																																																								    justify-content: space-evenly;
+																																																																																																								    align-content: flex-start;
+																																																																																																								    flex-wrap: wrap;
+																																																																																																								    align-items: center;">
+											<img class="knob-image" src="/Back/images/rank/silver.png" style="width: 30%;" alt="">
+											<input id="inputii" type="text" class="knob" data-linecap="round" value="56" data-width="125" data-height="125" data-thickness="0.25" data-fgcolor="">
+										</div>
+										<p id="txt" class="text-muted m-b-0">Silver</p>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+						<div class="col-md-12" style="margin-top: -72px!important;">
+							<div class="card">
+								<div class="header">
+									<h2>
+										<strong>Stastique</strong>
+
+										<ul class="header-dropdown">
+											<li class="dropdown">
+												<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+													<i class="zmdi zmdi-more"></i>
+												</a>
+												<ul class="dropdown-menu slideUp">
+													<li>
+														<a role="button" class="boxs-close">Delete</a>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</h2>
+								</div>
+
+								<div class="card">
+									<div class="body">
+										{% for feedback in feedbacksstat %}
+											<div style="display: flex;justify-content: space-around;">
+												<span class="card-rating-star">
+													{% if feedback.stars == 5 %}
+														{% for i in 1..5 %}
+															<i class="zmdi zmdi-star zmdi-hc-2x"></i>
+														{% endfor %}
+													{% else %}
+
+
+														{% for i in 1..feedback.stars %}
+															<i class="zmdi zmdi-star zmdi-hc-2x"></i>
+														{% endfor %}
+														{% for i in 1..(5-feedback.stars) %}
+															<i class="zmdi zmdi-star-outline zmdi-hc-2x"></i>
+														{% endfor %}
+													{% endif %}
+												</span>
+												<span style="font-size: 20px;margin-top: -2px;">
+													{{ feedback.percentage|round(1) }}%
+												</span>
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div></section>{% endblock %}{% block scriptjs %}<script>
+function myFunction() {
+console.log("myFunction");
+var knob = document.querySelector('.knob');
+var knobImage = document.querySelector('.knob-image');
+var value = Number(knob.value);
+var element = document.getElementById('txt');
+var inputii = document.getElementById('inputii');
+
+if (value < 20) {
+
+knobImage.src = "/Back/images/rank/iron.png";
+element.innerHTML = "Iron";
+inputii.style.color = "#525452";
+} else if (value < 40) {
+knobImage.src = "/Back/images/rank/bronze.png";
+element.innerHTML = "Bronze";
+inputii.style.color = "#8c6f47";
+} else if (value < 60) {
+knobImage.src = "/Back/images/rank/silver.png";
+element.innerHTML = "Silver";
+inputii.style.color = "#b5bdba";
+} else if (value < 80) {
+knobImage.src = "/Back/images/rank/gold.png";
+element.innerHTML = "Gold";
+inputii.style.color = "#f3e171";
+} else {
+knobImage.src = "/Back/images/rank/platinum.png";
+element.innerHTML = "Paltinum";
+inputii.style.color = "#3d8586";
+}
+
+}</script>{% endblock %}
